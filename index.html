@@ -22,21 +22,23 @@
     }
     .mode-toggle {
       display: flex;
-      background: #2a2a2a;
-      border-radius: 8px;
-      padding: 4px;
+      gap: 8px;
       margin-bottom: 16px;
+      background: #252525;
+      padding: 4px;
+      border-radius: 10px;
     }
     .mode-btn {
       flex: 1;
       padding: 10px;
       border: none;
-      border-radius: 6px;
-      background: transparent;
-      color: #aaa;
-      font-size: 0.95rem;
+      border-radius: 8px;
+      font-size: 0.9rem;
       font-weight: bold;
       cursor: pointer;
+      background: transparent;
+      color: #aaa;
+      transition: background 0.2s, color 0.2s;
     }
     .mode-btn.active {
       background: #4caf50;
@@ -57,7 +59,7 @@
       border: 1px solid #333;
       background: #2a2a2a;
       color: #fff;
-      font-size: 1.1rem;
+      font-size: 1.05rem;
     }
     input:focus, select:focus { outline: none; border-color: #4caf50; }
     .result-box {
@@ -72,7 +74,7 @@
       font-weight: bold;
       color: #4caf50;
     }
-    .btn-add {
+    button.action-btn {
       width: 100%;
       padding: 14px;
       border: none;
@@ -80,21 +82,10 @@
       font-size: 1rem;
       font-weight: bold;
       cursor: pointer;
-      background: #4caf50;
-      color: #000;
     }
-    .btn-clear {
-      width: 100%;
-      border: none;
-      border-radius: 8px;
-      font-weight: bold;
-      cursor: pointer;
-      background: #333;
-      color: #ddd;
-      margin-top: 14px;
-      padding: 10px;
-      font-size: 0.9rem;
-    }
+    .btn-add { background: #4caf50; color: #000; }
+    .btn-clear { background: #333; color: #ddd; margin-top: 14px; padding: 10px; font-size: 0.9rem; }
+    .btn-clear:hover { background: #444; }
     .tally-header {
       display: flex;
       justify-content: space-between;
@@ -108,80 +99,76 @@
       align-items: center;
       justify-content: space-between;
       gap: 10px;
-      margin-bottom: 12px;
-      padding-bottom: 12px;
-      border-bottom: 1px solid #2c2c2c;
+      margin-bottom: 10px;
     }
     .goal-row label {
       margin: 0;
-      font-size: 0.95rem;
-      color: #ccc;
+      white-space: nowrap;
     }
     .goal-row input {
-      width: 120px;
       margin: 0;
       padding: 8px 10px;
-      font-size: 1rem;
+      width: 120px;
       text-align: right;
+      font-size: 1rem;
     }
     .progress-container {
       margin-bottom: 14px;
-      display: none;
+      background: #252525;
+      padding: 12px;
+      border-radius: 8px;
     }
     .progress-bar-bg {
       width: 100%;
       height: 12px;
-      background: #2a2a2a;
+      background: #333;
       border-radius: 6px;
       overflow: hidden;
-      margin-bottom: 6px;
+      margin-bottom: 8px;
     }
     .progress-bar-fill {
       height: 100%;
       width: 0%;
       background: #4caf50;
-      transition: width 0.25s ease, background-color 0.25s ease;
+      transition: width 0.3s ease, background-color 0.3s ease;
     }
     .progress-stats {
       display: flex;
       justify-content: space-between;
       font-size: 0.85rem;
-      color: #aaa;
+      color: #ccc;
     }
-    .meal-section {
-      margin-bottom: 14px;
-      background: #252525;
-      border-radius: 8px;
-      padding: 10px 12px;
+    .category-section {
+      margin-top: 12px;
+      padding-top: 10px;
+      border-top: 1px solid #2c2c2c;
     }
-    .meal-header {
+    .category-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
       font-weight: bold;
-      font-size: 1rem;
-      color: #e0e0e0;
-      padding-bottom: 6px;
-      border-bottom: 1px solid #333;
+      font-size: 0.95rem;
+      color: #4caf50;
       margin-bottom: 6px;
     }
-    .meal-subtotal {
-      color: #4caf50;
-      font-size: 0.95rem;
+    .category-subtotal {
+      color: #aaa;
+      font-size: 0.9rem;
     }
     ul { list-style: none; padding: 0; margin: 0; }
     li {
       display: flex;
       justify-content: space-between;
       padding: 6px 0;
-      border-bottom: 1px solid #2f2f2f;
-      font-size: 0.9rem;
+      font-size: 0.92rem;
+      color: #e0e0e0;
     }
-    li:last-child { border-bottom: none; padding-bottom: 0; }
-    .empty-msg {
+    .empty-cat {
       font-size: 0.85rem;
-      color: #777;
+      color: #666;
       font-style: italic;
+      padding: 4px 0;
     }
     .delete-item { color: #ff5252; cursor: pointer; margin-left: 10px; font-weight: bold; }
     .hidden { display: none; }
@@ -190,11 +177,11 @@
 <body>
 
   <div class="card">
-    <h2>Quick Calorie Math</h2>
-    
+    <h2>Quick Calorie Log</h2>
+
     <div class="mode-toggle">
-      <button class="mode-btn active" id="btnWeigh" onclick="setMode('weigh')">Weigh Food</button>
-      <button class="mode-btn" id="btnDirect" onclick="setMode('direct')">Direct Calories</button>
+      <button type="button" id="btnWeigh" class="mode-btn active" onclick="setMode('weigh')">Weigh Food</button>
+      <button type="button" id="btnDirect" class="mode-btn" onclick="setMode('direct')">Direct Calories</button>
     </div>
 
     <div id="weighSection">
@@ -226,8 +213,9 @@
       <option value="Snack">Snack</option>
     </select>
 
-    <input type="text" id="foodName" placeholder="Optional food label (e.g. Chicken)">
-    <button class="btn-add" onclick="addToTally()">+ Add to Daily Tally</button>
+    <label for="foodName">Food label (optional)</label>
+    <input type="text" id="foodName" placeholder="e.g. Chicken, Coffee, Apple">
+    <button type="button" class="action-btn btn-add" onclick="addToTally()">+ Add to Daily Tally</button>
   </div>
 
   <div class="card">
@@ -241,26 +229,26 @@
       <input type="number" id="dailyGoal" inputmode="numeric" placeholder="e.g. 1800" oninput="updateGoal()">
     </div>
 
-    <div class="progress-container" id="progressContainer">
+    <div id="progressSection" class="progress-container hidden">
       <div class="progress-bar-bg">
-        <div class="progress-bar-fill" id="progressBar"></div>
+        <div id="progressFill" class="progress-bar-fill"></div>
       </div>
       <div class="progress-stats">
         <span id="percentText">0% of goal</span>
-        <span id="remainingText">0 kcal left</span>
+        <span id="remainingText">0 kcal remaining</span>
       </div>
     </div>
 
-    <div id="mealsContainer"></div>
+    <div id="categoriesContainer"></div>
 
-    <button class="btn-clear" onclick="clearTally()">Reset Daily Tally</button>
+    <button type="button" class="action-btn btn-clear" onclick="clearTally()">Reset Daily Tally</button>
   </div>
 
   <script>
-    let logs = JSON.parse(localStorage.getItem('calLogs')) || [];
-    let dailyGoal = parseFloat(localStorage.getItem('calGoal')) || 0;
     let currentMode = 'weigh';
     const categories = ['Breakfast', 'Lunch', 'Dinner', 'Snack'];
+    let logs = JSON.parse(localStorage.getItem('calLogs')) || [];
+    let dailyGoal = parseFloat(localStorage.getItem('dailyGoal')) || 0;
 
     if (dailyGoal > 0) {
       document.getElementById('dailyGoal').value = dailyGoal;
@@ -268,10 +256,22 @@
 
     function setMode(mode) {
       currentMode = mode;
-      document.getElementById('btnWeigh').classList.toggle('active', mode === 'weigh');
-      document.getElementById('btnDirect').classList.toggle('active', mode === 'direct');
-      document.getElementById('weighSection').classList.toggle('hidden', mode !== 'weigh');
-      document.getElementById('directSection').classList.toggle('hidden', mode !== 'direct');
+      const weighSec = document.getElementById('weighSection');
+      const directSec = document.getElementById('directSection');
+      const btnWeigh = document.getElementById('btnWeigh');
+      const btnDirect = document.getElementById('btnDirect');
+
+      if (mode === 'weigh') {
+        weighSec.classList.remove('hidden');
+        directSec.classList.add('hidden');
+        btnWeigh.classList.add('active');
+        btnDirect.classList.remove('active');
+      } else {
+        weighSec.classList.add('hidden');
+        directSec.classList.remove('hidden');
+        btnWeigh.classList.remove('active');
+        btnDirect.classList.add('active');
+      }
     }
 
     function calculate() {
@@ -289,6 +289,47 @@
       }
     }
 
+    function updateGoal() {
+      const val = parseFloat(document.getElementById('dailyGoal').value);
+      dailyGoal = val > 0 ? val : 0;
+      localStorage.setItem('dailyGoal', dailyGoal);
+      renderProgress(getTotalCals());
+    }
+
+    function getTotalCals() {
+      return logs.reduce((sum, item) => sum + item.cals, 0);
+    }
+
+    function renderProgress(total) {
+      const progSec = document.getElementById('progressSection');
+      if (dailyGoal <= 0) {
+        progSec.classList.add('hidden');
+        return;
+      }
+      progSec.classList.remove('hidden');
+
+      const rawPct = (total / dailyGoal) * 100;
+      const displayPct = Math.round(rawPct);
+      const barWidth = Math.min(rawPct, 100);
+      const diff = dailyGoal - total;
+
+      const fill = document.getElementById('progressFill');
+      fill.style.width = barWidth + '%';
+
+      const remText = document.getElementById('remainingText');
+      if (diff >= 0) {
+        fill.style.backgroundColor = '#4caf50';
+        remText.innerText = `${diff} kcal remaining`;
+        remText.style.color = '#ccc';
+      } else {
+        fill.style.backgroundColor = '#ff5252';
+        remText.innerText = `${Math.abs(diff)} kcal over`;
+        remText.style.color = '#ff5252';
+      }
+
+      document.getElementById('percentText').innerText = `${displayPct}% of target`;
+    }
+
     function addToTally() {
       let cals = 0;
       let label = '';
@@ -299,12 +340,12 @@
         cals = calculate();
         if (cals <= 0) return;
         const fg = document.getElementById('foodGrams').value;
-        label = nameInput ? `${nameInput} (${fg}g)` : `Food (${fg}g)`;
+        label = nameInput ? `${nameInput} (${fg}g)` : `Weighed Food (${fg}g)`;
         document.getElementById('foodGrams').value = '';
         document.getElementById('result').innerText = '0';
       } else {
         cals = Math.round(parseFloat(document.getElementById('directCals').value));
-        if (!(cals > 0)) return;
+        if (!cals || cals <= 0) return;
         label = nameInput ? nameInput : 'Quick Entry';
         document.getElementById('directCals').value = '';
       }
@@ -320,86 +361,50 @@
     }
 
     function clearTally() {
-      logs = [];
-      saveAndRender();
-    }
-
-    function updateGoal() {
-      const val = parseFloat(document.getElementById('dailyGoal').value);
-      dailyGoal = val > 0 ? Math.round(val) : 0;
-      localStorage.setItem('calGoal', dailyGoal);
-      renderProgress(getTotalCals());
-    }
-
-    function getTotalCals() {
-      return logs.reduce((sum, item) => sum + item.cals, 0);
-    }
-
-    function renderProgress(total) {
-      const container = document.getElementById('progressContainer');
-      const bar = document.getElementById('progressBar');
-      const percentText = document.getElementById('percentText');
-      const remainingText = document.getElementById('remainingText');
-
-      if (dailyGoal > 0) {
-        container.style.display = 'block';
-        const pct = Math.round((total / dailyGoal) * 100);
-        const clampedPct = Math.min(pct, 100);
-        bar.style.width = clampedPct + '%';
-        percentText.innerText = `${pct}% of ${dailyGoal} kcal`;
-
-        const diff = dailyGoal - total;
-        if (diff >= 0) {
-          bar.style.backgroundColor = '#4caf50';
-          remainingText.style.color = '#aaa';
-          remainingText.innerText = `${diff} kcal left`;
-        } else {
-          bar.style.backgroundColor = '#ff5252';
-          remainingText.style.color = '#ff5252';
-          remainingText.innerText = `${Math.abs(diff)} kcal over`;
-        }
-      } else {
-        container.style.display = 'none';
+      if (logs.length === 0) return;
+      if (confirm('Are you sure you want to reset your daily tally? This will clear all logged meals for today.')) {
+        logs = [];
+        saveAndRender();
       }
     }
 
     function saveAndRender() {
       localStorage.setItem('calLogs', JSON.stringify(logs));
-      const container = document.getElementById('mealsContainer');
+      const container = document.getElementById('categoriesContainer');
       container.innerHTML = '';
       let total = 0;
 
-      logs.forEach(item => {
-        if (!item.category) item.category = 'Snack';
-        total += item.cals;
-      });
-
       categories.forEach(cat => {
         const catItems = logs
-          .map((item, idx) => ({ ...item, originalIndex: idx }))
+          .map((item, idx) => ({ ...item, originalIndex: idx, category: item.category || 'Snack' }))
           .filter(item => item.category === cat);
-        
+
         const catTotal = catItems.reduce((sum, item) => sum + item.cals, 0);
+        total += catTotal;
 
         const section = document.createElement('div');
-        section.className = 'meal-section';
+        section.className = 'category-section';
 
-        let itemsHtml = '';
+        const header = document.createElement('div');
+        header.className = 'category-header';
+        header.innerHTML = `<span>${cat}</span><span class="category-subtotal">${catTotal} kcal</span>`;
+        section.appendChild(header);
+
         if (catItems.length === 0) {
-          itemsHtml = '<div class="empty-msg">No items logged</div>';
+          const empty = document.createElement('div');
+          empty.className = 'empty-cat';
+          empty.innerText = 'No items logged';
+          section.appendChild(empty);
         } else {
-          itemsHtml = '<ul>' + catItems.map(item => 
-            `<li><span>${item.label}</span><span><strong>${item.cals}</strong> kcal <span class="delete-item" onclick="removeItem(${item.originalIndex})">×</span></span></li>`
-          ).join('') + '</ul>';
+          const ul = document.createElement('ul');
+          catItems.forEach(item => {
+            const li = document.createElement('li');
+            li.innerHTML = `<span>${item.label}</span><span><strong>${item.cals}</strong> kcal <span class="delete-item" onclick="removeItem(${item.originalIndex})">×</span></span>`;
+            ul.appendChild(li);
+          });
+          section.appendChild(ul);
         }
 
-        section.innerHTML = `
-          <div class="meal-header">
-            <span>${cat}</span>
-            <span class="meal-subtotal">${catTotal} kcal</span>
-          </div>
-          ${itemsHtml}
-        `;
         container.appendChild(section);
       });
 
