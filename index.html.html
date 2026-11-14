@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calorie Calculator</title>
+  <style>
+    body {
+      font-family: system-ui, -apple-system, sans-serif;
+      background-color: #121212;
+      color: #f0f0f0;
+      max-width: 420px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    h2 { margin-top: 0; font-size: 1.4rem; margin-bottom: 12px; }
+    .card {
+      background: #1e1e1e;
+      padding: 16px;
+      border-radius: 12px;
+      margin-bottom: 16px;
+    }
+    .mode-toggle {
+      display: flex;
+      background: #2a2a2a;
+      border-radius: 8px;
+      padding: 4px;
+      margin-bottom: 16px;
+    }
+    .mode-btn {
+      flex: 1;
+      padding: 10px;
+      border: none;
+      border-radius: 6px;
+      background: transparent;
+      color: #aaa;
+      font-size: 0.95rem;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    .mode-btn.active {
+      background: #4caf50;
+      color: #000;
+    }
+    label {
+      display: block;
+      font-size: 0.9rem;
+      color: #aaa;
+      margin-bottom: 4px;
+    }
+    input, select {
+      width: 100%;
+      box-sizing: border-box;
+      padding: 12px;
+      margin-bottom: 12px;
+      border-radius: 8px;
+      border: 1px solid #333;
+      background: #2a2a2a;
+      color: #fff;
+      font-size: 1.1rem;
+    }
+    input:focus, select:focus { outline: none; border-color: #4caf50; }
+    .result-box {
+      text-align: center;
+      padding: 12px;
+      background: #252525;
+      border-radius: 8px;
+      margin-bottom: 12px;
+    }
+    .result-number {
+      font-size: 2rem;
+      font-weight: bold;
+      color: #4caf50;
+    }
+    .btn-add {
+      width: 100%;
+      padding: 14px;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: bold;
+      cursor: pointer;
+      background: #4caf50;
+      color: #000;
+    }
+    .btn-clear {
+      width: 100%;
+      border: none;
+      border-radius: 8px;
+      font-weight: bold;
+      cursor: pointer;
+      background: #333;
+      color: #ddd;
+      margin-top: 14px;
+      padding: 10px;
+      font-size: 0.9rem;
+    }
+    .tally-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 1.2rem;
+      font-weight: bold;
+      margin-bottom: 12px;
+    }
+    .goal-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 12px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid #2c2c2c;
+    }
+    .goal-row label {
+      margin: 0;
+      font-size: 0.95rem;
+      color: #ccc;
+    }
+    .goal-row input {
+      width: 120px;
+      margin: 0;
+      padding: 8px 10px;
+      font-size: 1rem;
+      text-align: right;
+    }
+    .progress-container {
+      margin-bottom: 14px;
+      display: none;
+    }
+    .progress-bar-bg {
+      width: 100%;
+      height: 12px;
+      background: #2a2a2a;
+      border-radius: 6px;
+      overflow: hidden;
+      margin-bottom: 6px;
+    }
+    .progress-bar-fill {
+      height: 100%;
+      width: 0%;
+      background: #4caf50;
+      transition: width 0.25s ease, background-color 0.25s ease;
+    }
+    .progress-stats {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.85rem;
+      color: #aaa;
+    }
+    .meal-section {
+      margin-bottom: 14px;
+      background: #252525;
+      border-radius: 8px;
+      padding: 10px 12px;
+    }
+    .meal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-weight: bold;
+      font-size: 1rem;
+      color: #e0e0e0;
+      padding-bottom: 6px;
+      border-bottom: 1px solid #333;
+      margin-bottom: 6px;
+    }
+    .meal-subtotal {
+      color: #4caf50;
+      font-size: 0.95rem;
+    }
+    ul { list-style: none; padding: 0; margin: 0; }
+    li {
+      display: flex;
+      justify-content: space-between;
+      padding: 6px 0;
+      border-bottom: 1px solid #2f2f2f;
+      font-size: 0.9rem;
+    }
+    li:last-child { border-bottom: none; padding-bottom: 0; }
+    .empty-msg {
+      font-size: 0.85rem;
+      color: #777;
+      font-style: italic;
+    }
+    .delete-item { color: #ff5252; cursor: pointer; margin-left: 10px; font-weight: bold; }
+    .hidden { display: none; }
+  </style>
+</head>
+<body>
+
+  <div class="card">
+    <h2>Quick Calorie Math</h2>
+    
+    <div class="mode-toggle">
+      <button class="mode-btn active" id="btnWeigh" onclick="setMode('weigh')">Weigh Food</button>
+      <button class="mode-btn" id="btnDirect" onclick="setMode('direct')">Direct Calories</button>
+    </div>
+
+    <div id="weighSection">
+      <label for="servingGrams">Grams per serving (label)</label>
+      <input type="number" id="servingGrams" inputmode="decimal" placeholder="e.g. 112" oninput="calculate()">
+
+      <label for="servingCals">Calories per serving (label)</label>
+      <input type="number" id="servingCals" inputmode="decimal" placeholder="e.g. 160" oninput="calculate()">
+
+      <label for="foodGrams">Your food weight (grams)</label>
+      <input type="number" id="foodGrams" inputmode="decimal" placeholder="e.g. 168" oninput="calculate()">
+
+      <div class="result-box">
+        <div style="font-size: 0.85rem; color: #aaa;">Calculated Calories</div>
+        <div class="result-number" id="result">0</div>
+      </div>
+    </div>
+
+    <div id="directSection" class="hidden">
+      <label for="directCals">Calories</label>
+      <input type="number" id="directCals" inputmode="decimal" placeholder="e.g. 250">
+    </div>
+
+    <label for="mealCategory">Meal Category</label>
+    <select id="mealCategory">
+      <option value="Breakfast">Breakfast</option>
+      <option value="Lunch">Lunch</option>
+      <option value="Dinner">Dinner</option>
+      <option value="Snack">Snack</option>
+    </select>
+
+    <input type="text" id="foodName" placeholder="Optional food label (e.g. Chicken)">
+    <button class="btn-add" onclick="addToTally()">+ Add to Daily Tally</button>
+  </div>
+
+  <div class="card">
+    <div class="tally-header">
+      <span>Daily Total:</span>
+      <span style="color: #4caf50;"><span id="totalCals">0</span> kcal</span>
+    </div>
+
+    <div class="goal-row">
+      <label for="dailyGoal">Daily Target (kcal):</label>
+      <input type="number" id="dailyGoal" inputmode="numeric" placeholder="e.g. 1800" oninput="updateGoal()">
+    </div>
+
+    <div class="progress-container" id="progressContainer">
+      <div class="progress-bar-bg">
+        <div class="progress-bar-fill" id="progressBar"></div>
+      </div>
+      <div class="progress-stats">
+        <span id="percentText">0% of goal</span>
+        <span id="remainingText">0 kcal left</span>
+      </div>
+    </div>
+
+    <div id="mealsContainer"></div>
+
+    <button class="btn-clear" onclick="clearTally()">Reset Daily Tally</button>
+  </div>
+
+  <script>
+    let logs = JSON.parse(localStorage.getItem('calLogs')) || [];
+    let dailyGoal = parseFloat(localStorage.getItem('calGoal')) || 0;
+    let currentMode = 'weigh';
+    const categories = ['Breakfast', 'Lunch', 'Dinner', 'Snack'];
+
+    if (dailyGoal > 0) {
+      document.getElementById('dailyGoal').value = dailyGoal;
+    }
+
+    function setMode(mode) {
+      currentMode = mode;
+      document.getElementById('btnWeigh').classList.toggle('active', mode === 'weigh');
+      document.getElementById('btnDirect').classList.toggle('active', mode === 'direct');
+      document.getElementById('weighSection').classList.toggle('hidden', mode !== 'weigh');
+      document.getElementById('directSection').classList.toggle('hidden', mode !== 'direct');
+    }
+
+    function calculate() {
+      const sg = parseFloat(document.getElementById('servingGrams').value);
+      const sc = parseFloat(document.getElementById('servingCals').value);
+      const fg = parseFloat(document.getElementById('foodGrams').value);
+
+      if (sg > 0 && sc >= 0 && fg >= 0) {
+        const cals = Math.round((sc / sg) * fg);
+        document.getElementById('result').innerText = cals;
+        return cals;
+      } else {
+        document.getElementById('result').innerText = '0';
+        return 0;
+      }
+    }
+
+    function addToTally() {
+      let cals = 0;
+      let label = '';
+      const nameInput = document.getElementById('foodName').value.trim();
+      const category = document.getElementById('mealCategory').value;
+
+      if (currentMode === 'weigh') {
+        cals = calculate();
+        if (cals <= 0) return;
+        const fg = document.getElementById('foodGrams').value;
+        label = nameInput ? `${nameInput} (${fg}g)` : `Food (${fg}g)`;
+        document.getElementById('foodGrams').value = '';
+        document.getElementById('result').innerText = '0';
+      } else {
+        cals = Math.round(parseFloat(document.getElementById('directCals').value));
+        if (!(cals > 0)) return;
+        label = nameInput ? nameInput : 'Quick Entry';
+        document.getElementById('directCals').value = '';
+      }
+
+      logs.push({ label, cals, category });
+      document.getElementById('foodName').value = '';
+      saveAndRender();
+    }
+
+    function removeItem(index) {
+      logs.splice(index, 1);
+      saveAndRender();
+    }
+
+    function clearTally() {
+      logs = [];
+      saveAndRender();
+    }
+
+    function updateGoal() {
+      const val = parseFloat(document.getElementById('dailyGoal').value);
+      dailyGoal = val > 0 ? Math.round(val) : 0;
+      localStorage.setItem('calGoal', dailyGoal);
+      renderProgress(getTotalCals());
+    }
+
+    function getTotalCals() {
+      return logs.reduce((sum, item) => sum + item.cals, 0);
+    }
+
+    function renderProgress(total) {
+      const container = document.getElementById('progressContainer');
+      const bar = document.getElementById('progressBar');
+      const percentText = document.getElementById('percentText');
+      const remainingText = document.getElementById('remainingText');
+
+      if (dailyGoal > 0) {
+        container.style.display = 'block';
+        const pct = Math.round((total / dailyGoal) * 100);
+        const clampedPct = Math.min(pct, 100);
+        bar.style.width = clampedPct + '%';
+        percentText.innerText = `${pct}% of ${dailyGoal} kcal`;
+
+        const diff = dailyGoal - total;
+        if (diff >= 0) {
+          bar.style.backgroundColor = '#4caf50';
+          remainingText.style.color = '#aaa';
+          remainingText.innerText = `${diff} kcal left`;
+        } else {
+          bar.style.backgroundColor = '#ff5252';
+          remainingText.style.color = '#ff5252';
+          remainingText.innerText = `${Math.abs(diff)} kcal over`;
+        }
+      } else {
+        container.style.display = 'none';
+      }
+    }
+
+    function saveAndRender() {
+      localStorage.setItem('calLogs', JSON.stringify(logs));
+      const container = document.getElementById('mealsContainer');
+      container.innerHTML = '';
+      let total = 0;
+
+      logs.forEach(item => {
+        if (!item.category) item.category = 'Snack';
+        total += item.cals;
+      });
+
+      categories.forEach(cat => {
+        const catItems = logs
+          .map((item, idx) => ({ ...item, originalIndex: idx }))
+          .filter(item => item.category === cat);
+        
+        const catTotal = catItems.reduce((sum, item) => sum + item.cals, 0);
+
+        const section = document.createElement('div');
+        section.className = 'meal-section';
+
+        let itemsHtml = '';
+        if (catItems.length === 0) {
+          itemsHtml = '<div class="empty-msg">No items logged</div>';
+        } else {
+          itemsHtml = '<ul>' + catItems.map(item => 
+            `<li><span>${item.label}</span><span><strong>${item.cals}</strong> kcal <span class="delete-item" onclick="removeItem(${item.originalIndex})">×</span></span></li>`
+          ).join('') + '</ul>';
+        }
+
+        section.innerHTML = `
+          <div class="meal-header">
+            <span>${cat}</span>
+            <span class="meal-subtotal">${catTotal} kcal</span>
+          </div>
+          ${itemsHtml}
+        `;
+        container.appendChild(section);
+      });
+
+      document.getElementById('totalCals').innerText = total;
+      renderProgress(total);
+    }
+
+    saveAndRender();
+  </script>
+</body>
+</html>
