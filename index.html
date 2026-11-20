@@ -3,93 +3,182 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="manifest" href="manifest.json">
-  <meta name="theme-color" content="#0088cc">
-  <link rel="icon" type="image/png" href="icon.png">
-  <link rel="apple-touch-icon" href="icon.png">
   <title>Calorie Calculator</title>
   <style>
+    :root {
+      --bg-color: #121212;
+      --card-bg: #1e1e1e;
+      --surface-bg: #252525;
+      --input-bg: #2a2a2a;
+      --border-color: #333333;
+      --divider-color: #2c2c2c;
+      --text-primary: #f0f0f0;
+      --text-secondary: #aaaaaa;
+      --accent: #3b82f6;
+      --accent-hover: #2563eb;
+      --accent-text: #ffffff;
+      --danger: #ef4444;
+      --btn-secondary-bg: #333333;
+      --btn-secondary-text: #dddddd;
+      --shadow: none;
+    }
+
+    body.light-mode {
+      --bg-color: #f3f4f6;
+      --card-bg: #ffffff;
+      --surface-bg: #f8fafc;
+      --input-bg: #ffffff;
+      --border-color: #d1d5db;
+      --divider-color: #e5e7eb;
+      --text-primary: #111827;
+      --text-secondary: #6b7280;
+      --accent: #2563eb;
+      --accent-hover: #1d4ed8;
+      --accent-text: #ffffff;
+      --danger: #dc2626;
+      --btn-secondary-bg: #e5e7eb;
+      --btn-secondary-text: #374151;
+      --shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+    }
+
     body {
       font-family: system-ui, -apple-system, sans-serif;
-      background-color: #121212;
-      color: #f0f0f0;
+      background-color: var(--bg-color);
+      color: var(--text-primary);
       max-width: 420px;
       margin: 0 auto;
       padding: 20px;
+      transition: background-color 0.2s, color 0.2s;
     }
-    h2 { margin-top: 0; font-size: 1.4rem; margin-bottom: 12px; }
+
+    .top-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 14px;
+    }
+
+    .app-title {
+      font-size: 1.25rem;
+      font-weight: 700;
+      margin: 0;
+    }
+
+    .theme-toggle {
+      width: auto;
+      padding: 6px 12px;
+      font-size: 0.85rem;
+      border-radius: 20px;
+      background: var(--card-bg);
+      color: var(--text-primary);
+      border: 1px solid var(--border-color);
+      box-shadow: var(--shadow);
+      cursor: pointer;
+    }
+
+    h2 { margin-top: 0; font-size: 1.2rem; margin-bottom: 12px; }
+
     .card {
-      background: #1e1e1e;
+      background: var(--card-bg);
       padding: 16px;
       border-radius: 12px;
       margin-bottom: 16px;
+      box-shadow: var(--shadow);
+      border: 1px solid var(--divider-color);
     }
-    .mode-toggle {
+
+    .mode-switch {
       display: flex;
-      gap: 8px;
-      margin-bottom: 16px;
-      background: #252525;
+      background: var(--surface-bg);
+      border-radius: 8px;
       padding: 4px;
-      border-radius: 10px;
+      margin-bottom: 14px;
+      border: 1px solid var(--border-color);
     }
+
     .mode-btn {
       flex: 1;
-      padding: 10px;
+      padding: 8px;
       border: none;
-      border-radius: 8px;
-      font-size: 0.9rem;
-      font-weight: bold;
-      cursor: pointer;
+      border-radius: 6px;
       background: transparent;
-      color: #aaa;
-      transition: background 0.2s, color 0.2s;
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
     }
+
     .mode-btn.active {
-      background: #4caf50;
-      color: #000;
+      background: var(--accent);
+      color: var(--accent-text);
     }
+
     label {
       display: block;
-      font-size: 0.9rem;
-      color: #aaa;
+      font-size: 0.85rem;
+      color: var(--text-secondary);
       margin-bottom: 4px;
     }
+
     input, select {
       width: 100%;
       box-sizing: border-box;
-      padding: 12px;
+      padding: 11px 12px;
       margin-bottom: 12px;
       border-radius: 8px;
-      border: 1px solid #333;
-      background: #2a2a2a;
-      color: #fff;
-      font-size: 1.05rem;
+      border: 1px solid var(--border-color);
+      background: var(--input-bg);
+      color: var(--text-primary);
+      font-size: 1rem;
     }
-    input:focus, select:focus { outline: none; border-color: #4caf50; }
+
+    input:focus, select:focus {
+      outline: none;
+      border-color: var(--accent);
+    }
+
     .result-box {
       text-align: center;
       padding: 12px;
-      background: #252525;
+      background: var(--surface-bg);
+      border: 1px solid var(--border-color);
       border-radius: 8px;
       margin-bottom: 12px;
     }
+
     .result-number {
       font-size: 2rem;
       font-weight: bold;
-      color: #4caf50;
+      color: var(--accent);
     }
+
     button.action-btn {
       width: 100%;
-      padding: 14px;
+      padding: 13px;
       border: none;
       border-radius: 8px;
       font-size: 1rem;
       font-weight: bold;
       cursor: pointer;
     }
-    .btn-add { background: #4caf50; color: #000; }
-    .btn-clear { background: #333; color: #ddd; margin-top: 14px; padding: 10px; font-size: 0.9rem; }
-    .btn-clear:hover { background: #444; }
+
+    .btn-add {
+      background: var(--accent);
+      color: var(--accent-text);
+    }
+
+    .btn-add:hover {
+      background: var(--accent-hover);
+    }
+
+    .btn-clear {
+      background: var(--btn-secondary-bg);
+      color: var(--btn-secondary-text);
+      margin-top: 14px;
+      padding: 10px;
+      font-size: 0.9rem;
+    }
+
     .tally-header {
       display: flex;
       justify-content: space-between;
@@ -98,97 +187,128 @@
       font-weight: bold;
       margin-bottom: 12px;
     }
-    .goal-row {
+
+    .target-row {
       display: flex;
       align-items: center;
       justify-content: space-between;
       gap: 10px;
       margin-bottom: 10px;
     }
-    .goal-row label {
+
+    .target-row label {
       margin: 0;
       white-space: nowrap;
     }
-    .goal-row input {
+
+    .target-row input {
       margin: 0;
-      padding: 8px 10px;
-      width: 120px;
+      width: 130px;
+      padding: 7px 10px;
       text-align: right;
-      font-size: 1rem;
+      font-size: 0.95rem;
     }
+
     .progress-container {
-      margin-bottom: 14px;
-      background: #252525;
-      padding: 12px;
+      background: var(--surface-bg);
+      border: 1px solid var(--border-color);
       border-radius: 8px;
+      padding: 10px;
+      margin-bottom: 14px;
     }
-    .progress-bar-bg {
+
+    .progress-track {
       width: 100%;
-      height: 12px;
-      background: #333;
-      border-radius: 6px;
+      height: 10px;
+      background: var(--divider-color);
+      border-radius: 5px;
       overflow: hidden;
-      margin-bottom: 8px;
+      margin-bottom: 6px;
     }
-    .progress-bar-fill {
+
+    .progress-fill {
       height: 100%;
       width: 0%;
-      background: #4caf50;
-      transition: width 0.3s ease, background-color 0.3s ease;
+      background: var(--accent);
+      transition: width 0.25s ease, background-color 0.25s ease;
     }
+
+    .progress-fill.over {
+      background: var(--danger);
+    }
+
     .progress-stats {
       display: flex;
       justify-content: space-between;
       font-size: 0.85rem;
-      color: #ccc;
+      color: var(--text-secondary);
     }
-    .category-section {
+
+    .over-text {
+      color: var(--danger);
+      font-weight: 600;
+    }
+
+    .meal-section {
       margin-top: 12px;
       padding-top: 10px;
-      border-top: 1px solid #2c2c2c;
+      border-top: 1px solid var(--divider-color);
     }
-    .category-header {
+
+    .meal-header {
       display: flex;
       justify-content: space-between;
-      align-items: center;
-      font-weight: bold;
+      font-weight: 700;
       font-size: 0.95rem;
-      color: #4caf50;
       margin-bottom: 6px;
+      color: var(--accent);
     }
-    .category-subtotal {
-      color: #aaa;
-      font-size: 0.9rem;
-    }
+
     ul { list-style: none; padding: 0; margin: 0; }
+
     li {
       display: flex;
       justify-content: space-between;
+      align-items: center;
       padding: 6px 0;
+      border-bottom: 1px solid var(--divider-color);
       font-size: 0.92rem;
-      color: #e0e0e0;
     }
-    .empty-cat {
-      font-size: 0.85rem;
-      color: #666;
+
+    li:last-child { border-bottom: none; }
+
+    .empty-meal {
+      font-size: 0.82rem;
+      color: var(--text-secondary);
       font-style: italic;
-      padding: 4px 0;
+      padding: 2px 0 4px 0;
     }
-    .delete-item { color: #ff5252; cursor: pointer; margin-left: 10px; font-weight: bold; }
+
+    .delete-item {
+      color: var(--danger);
+      cursor: pointer;
+      margin-left: 10px;
+      font-weight: bold;
+      padding: 2px 6px;
+    }
+
     .hidden { display: none; }
   </style>
 </head>
 <body>
 
-  <div class="card">
-    <h2>Quick Calorie Log</h2>
+  <div class="top-bar">
+    <h1 class="app-title">Calorie Tracker</h1>
+    <button class="theme-toggle" id="themeBtn" onclick="toggleTheme()">☀️ Light Mode</button>
+  </div>
 
-    <div class="mode-toggle">
-      <button type="button" id="btnWeigh" class="mode-btn active" onclick="setMode('weigh')">Weigh Food</button>
-      <button type="button" id="btnDirect" class="mode-btn" onclick="setMode('direct')">Direct Calories</button>
+  <div class="card">
+    <div class="mode-switch">
+      <button class="mode-btn active" id="btnWeighMode" onclick="setMode('weigh')">Weigh Food</button>
+      <button class="mode-btn" id="btnDirectMode" onclick="setMode('direct')">Direct Calories</button>
     </div>
 
-    <div id="weighSection">
+    <div id="weighInputs">
       <label for="servingGrams">Grams per serving (label)</label>
       <input type="number" id="servingGrams" inputmode="decimal" placeholder="e.g. 112" oninput="calculate()">
 
@@ -199,12 +319,12 @@
       <input type="number" id="foodGrams" inputmode="decimal" placeholder="e.g. 168" oninput="calculate()">
 
       <div class="result-box">
-        <div style="font-size: 0.85rem; color: #aaa;">Calculated Calories</div>
+        <div style="font-size: 0.85rem; color: var(--text-secondary);">Calculated Calories</div>
         <div class="result-number" id="result">0</div>
       </div>
     </div>
 
-    <div id="directSection" class="hidden">
+    <div id="directInputs" class="hidden">
       <label for="directCals">Calories</label>
       <input type="number" id="directCals" inputmode="decimal" placeholder="e.g. 250">
     </div>
@@ -217,65 +337,63 @@
       <option value="Snack">Snack</option>
     </select>
 
-    <label for="foodName">Food label (optional)</label>
-    <input type="text" id="foodName" placeholder="e.g. Chicken, Coffee, Apple">
-    <button type="button" class="action-btn btn-add" onclick="addToTally()">+ Add to Daily Tally</button>
+    <input type="text" id="foodName" placeholder="Optional food label (e.g. Chicken)">
+    <button class="action-btn btn-add" onclick="addToTally()">+ Add to Daily Tally</button>
   </div>
 
   <div class="card">
     <div class="tally-header">
       <span>Daily Total:</span>
-      <span style="color: #4caf50;"><span id="totalCals">0</span> kcal</span>
+      <span style="color: var(--accent);"><span id="totalCals">0</span> kcal</span>
     </div>
 
-    <div class="goal-row">
-      <label for="dailyGoal">Daily Target (kcal):</label>
-      <input type="number" id="dailyGoal" inputmode="numeric" placeholder="e.g. 1800" oninput="updateGoal()">
+    <div class="target-row">
+      <label for="dailyTarget">Daily Goal (kcal):</label>
+      <input type="number" id="dailyTarget" inputmode="numeric" placeholder="e.g. 2000" oninput="saveTarget()">
     </div>
 
-    <div id="progressSection" class="progress-container hidden">
-      <div class="progress-bar-bg">
-        <div id="progressFill" class="progress-bar-fill"></div>
+    <div class="progress-container hidden" id="progressBox">
+      <div class="progress-track">
+        <div class="progress-fill" id="progressBar"></div>
       </div>
       <div class="progress-stats">
         <span id="percentText">0% of goal</span>
-        <span id="remainingText">0 kcal remaining</span>
+        <span id="remainingText">0 kcal left</span>
       </div>
     </div>
 
-    <div id="categoriesContainer"></div>
+    <div id="mealSections"></div>
 
-    <button type="button" class="action-btn btn-clear" onclick="clearTally()">Reset Daily Tally</button>
+    <button class="action-btn btn-clear" onclick="clearTally()">Reset Daily Tally</button>
   </div>
 
   <script>
-    let currentMode = 'weigh';
-    const categories = ['Breakfast', 'Lunch', 'Dinner', 'Snack'];
     let logs = JSON.parse(localStorage.getItem('calLogs')) || [];
-    let dailyGoal = parseFloat(localStorage.getItem('dailyGoal')) || 0;
+    let currentMode = 'weigh';
 
-    if (dailyGoal > 0) {
-      document.getElementById('dailyGoal').value = dailyGoal;
+    function initTheme() {
+      const savedTheme = localStorage.getItem('calTheme') || 'dark';
+      if (savedTheme === 'light') {
+        document.body.classList.add('light-mode');
+        document.getElementById('themeBtn').innerText = '🌙 Dark Mode';
+      } else {
+        document.body.classList.remove('light-mode');
+        document.getElementById('themeBtn').innerText = '☀️ Light Mode';
+      }
+    }
+
+    function toggleTheme() {
+      const isLight = document.body.classList.toggle('light-mode');
+      localStorage.setItem('calTheme', isLight ? 'light' : 'dark');
+      document.getElementById('themeBtn').innerText = isLight ? '🌙 Dark Mode' : '☀️ Light Mode';
     }
 
     function setMode(mode) {
       currentMode = mode;
-      const weighSec = document.getElementById('weighSection');
-      const directSec = document.getElementById('directSection');
-      const btnWeigh = document.getElementById('btnWeigh');
-      const btnDirect = document.getElementById('btnDirect');
-
-      if (mode === 'weigh') {
-        weighSec.classList.remove('hidden');
-        directSec.classList.add('hidden');
-        btnWeigh.classList.add('active');
-        btnDirect.classList.remove('active');
-      } else {
-        weighSec.classList.add('hidden');
-        directSec.classList.remove('hidden');
-        btnWeigh.classList.remove('active');
-        btnDirect.classList.add('active');
-      }
+      document.getElementById('btnWeighMode').classList.toggle('active', mode === 'weigh');
+      document.getElementById('btnDirectMode').classList.toggle('active', mode === 'direct');
+      document.getElementById('weighInputs').classList.toggle('hidden', mode !== 'weigh');
+      document.getElementById('directInputs').classList.toggle('hidden', mode !== 'direct');
     }
 
     function calculate() {
@@ -293,68 +411,27 @@
       }
     }
 
-    function updateGoal() {
-      const val = parseFloat(document.getElementById('dailyGoal').value);
-      dailyGoal = val > 0 ? val : 0;
-      localStorage.setItem('dailyGoal', dailyGoal);
-      renderProgress(getTotalCals());
-    }
-
-    function getTotalCals() {
-      return logs.reduce((sum, item) => sum + item.cals, 0);
-    }
-
-    function renderProgress(total) {
-      const progSec = document.getElementById('progressSection');
-      if (dailyGoal <= 0) {
-        progSec.classList.add('hidden');
-        return;
-      }
-      progSec.classList.remove('hidden');
-
-      const rawPct = (total / dailyGoal) * 100;
-      const displayPct = Math.round(rawPct);
-      const barWidth = Math.min(rawPct, 100);
-      const diff = dailyGoal - total;
-
-      const fill = document.getElementById('progressFill');
-      fill.style.width = barWidth + '%';
-
-      const remText = document.getElementById('remainingText');
-      if (diff >= 0) {
-        fill.style.backgroundColor = '#4caf50';
-        remText.innerText = `${diff} kcal remaining`;
-        remText.style.color = '#ccc';
-      } else {
-        fill.style.backgroundColor = '#ff5252';
-        remText.innerText = `${Math.abs(diff)} kcal over`;
-        remText.style.color = '#ff5252';
-      }
-
-      document.getElementById('percentText').innerText = `${displayPct}% of target`;
-    }
-
     function addToTally() {
       let cals = 0;
       let label = '';
       const nameInput = document.getElementById('foodName').value.trim();
-      const category = document.getElementById('mealCategory').value;
+      const meal = document.getElementById('mealCategory').value;
 
       if (currentMode === 'weigh') {
         cals = calculate();
         if (cals <= 0) return;
         const fg = document.getElementById('foodGrams').value;
-        label = nameInput ? `${nameInput} (${fg}g)` : `Weighed Food (${fg}g)`;
+        label = nameInput ? `${nameInput} (${fg}g)` : `Food (${fg}g)`;
         document.getElementById('foodGrams').value = '';
         document.getElementById('result').innerText = '0';
       } else {
         cals = Math.round(parseFloat(document.getElementById('directCals').value));
-        if (!cals || cals <= 0) return;
+        if (!(cals > 0)) return;
         label = nameInput ? nameInput : 'Quick Entry';
         document.getElementById('directCals').value = '';
       }
 
-      logs.push({ label, cals, category });
+      logs.push({ label, cals, meal });
       document.getElementById('foodName').value = '';
       saveAndRender();
     }
@@ -366,56 +443,97 @@
 
     function clearTally() {
       if (logs.length === 0) return;
-      if (confirm('Are you sure you want to reset your daily tally? This will clear all logged meals for today.')) {
+      if (confirm('Are you sure you want to reset your daily tally?')) {
         logs = [];
         saveAndRender();
       }
     }
 
+    function saveTarget() {
+      const val = document.getElementById('dailyTarget').value;
+      localStorage.setItem('calTarget', val);
+      updateProgress();
+    }
+
+    function updateProgress() {
+      const total = logs.reduce((sum, item) => sum + item.cals, 0);
+      const target = parseFloat(document.getElementById('dailyTarget').value);
+      const box = document.getElementById('progressBox');
+
+      if (target > 0) {
+        box.classList.remove('hidden');
+        const pct = Math.round((total / target) * 100);
+        const bar = document.getElementById('progressBar');
+        bar.style.width = Math.min(pct, 100) + '%';
+
+        const diff = target - total;
+        const remEl = document.getElementById('remainingText');
+
+        if (diff >= 0) {
+          bar.classList.remove('over');
+          remEl.classList.remove('over-text');
+          remEl.innerText = `${diff} kcal left`;
+        } else {
+          bar.classList.add('over');
+          remEl.classList.add('over-text');
+          remEl.innerText = `${Math.abs(diff)} kcal over`;
+        }
+        document.getElementById('percentText').innerText = `${pct}% of goal`;
+      } else {
+        box.classList.add('hidden');
+      }
+    }
+
     function saveAndRender() {
       localStorage.setItem('calLogs', JSON.stringify(logs));
-      const container = document.getElementById('categoriesContainer');
+      const container = document.getElementById('mealSections');
       container.innerHTML = '';
       let total = 0;
 
+      const categories = ['Breakfast', 'Lunch', 'Dinner', 'Snack'];
+
       categories.forEach(cat => {
         const catItems = logs
-          .map((item, idx) => ({ ...item, originalIndex: idx, category: item.category || 'Snack' }))
-          .filter(item => item.category === cat);
+          .map((item, idx) => ({ ...item, originalIndex: idx, meal: item.meal || 'Snack' }))
+          .filter(item => item.meal === cat);
 
         const catTotal = catItems.reduce((sum, item) => sum + item.cals, 0);
         total += catTotal;
 
         const section = document.createElement('div');
-        section.className = 'category-section';
+        section.className = 'meal-section';
 
-        const header = document.createElement('div');
-        header.className = 'category-header';
-        header.innerHTML = `<span>${cat}</span><span class="category-subtotal">${catTotal} kcal</span>`;
-        section.appendChild(header);
-
+        let itemsHtml = '';
         if (catItems.length === 0) {
-          const empty = document.createElement('div');
-          empty.className = 'empty-cat';
-          empty.innerText = 'No items logged';
-          section.appendChild(empty);
+          itemsHtml = `<div class="empty-meal">No items logged</div>`;
         } else {
-          const ul = document.createElement('ul');
-          catItems.forEach(item => {
-            const li = document.createElement('li');
-            li.innerHTML = `<span>${item.label}</span><span><strong>${item.cals}</strong> kcal <span class="delete-item" onclick="removeItem(${item.originalIndex})">×</span></span>`;
-            ul.appendChild(li);
-          });
-          section.appendChild(ul);
+          itemsHtml = '<ul>' + catItems.map(item => `
+            <li>
+              <span>${item.label}</span>
+              <span><strong>${item.cals}</strong> kcal <span class="delete-item" onclick="removeItem(${item.originalIndex})">×</span></span>
+            </li>
+          `).join('') + '</ul>';
         }
 
+        section.innerHTML = `
+          <div class="meal-header">
+            <span>${cat}</span>
+            <span>${catTotal} kcal</span>
+          </div>
+          ${itemsHtml}
+        `;
         container.appendChild(section);
       });
 
       document.getElementById('totalCals').innerText = total;
-      renderProgress(total);
+      updateProgress();
     }
 
+    initTheme();
+    const savedTarget = localStorage.getItem('calTarget');
+    if (savedTarget) {
+      document.getElementById('dailyTarget').value = savedTarget;
+    }
     saveAndRender();
   </script>
 </body>
