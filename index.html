@@ -7,155 +7,149 @@
   <script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js" defer></script>
   <style>
     :root {
-      --bg: #0f0e0c;
-      --surface: #1b1915;
-      --surface-alt: #26221c;
-      --border: #3d3426;
-      --text: #f2ece1;
-      --text-muted: #a89d8a;
-      --accent: #d4a338;
-      --accent-hover: #e5b649;
-      --accent-text: #120f08;
-      --danger: #d94a38;
-      --success: #5da666;
-      --shadow: 0 6px 20px rgba(0, 0, 0, 0.55);
+      --bg-color: #0d0d0d;
+      --card-bg: #171717;
+      --input-bg: #222222;
+      --sub-bg: #1c1c1c;
+      --text-main: #e8e6e1;
+      --text-muted: #9a968c;
+      --border-color: #2e2c27;
+      --accent: #d4af37;
+      --accent-hover: #e5c158;
+      --accent-text: #0d0d0d;
+      --accent-soft: rgba(212, 175, 55, 0.14);
+      --ember: #e25822;
+      --danger: #cf352e;
+      --track-bg: #2a2824;
+      --header-font: Georgia, 'Times New Roman', serif;
     }
 
-    body.light-theme {
-      --bg: #f5f1e8;
-      --surface: #ffffff;
-      --surface-alt: #ede7da;
-      --border: #d6cbb8;
-      --text: #241f18;
-      --text-muted: #6e6353;
-      --accent: #b5831d;
-      --accent-hover: #9e7014;
+    body.light-mode {
+      --bg-color: #f4f1ea;
+      --card-bg: #ffffff;
+      --input-bg: #faf8f5;
+      --sub-bg: #f0ece1;
+      --text-main: #1f1e1b;
+      --text-muted: #666258;
+      --border-color: #dcd6c8;
+      --accent: #b0891e;
+      --accent-hover: #967315;
       --accent-text: #ffffff;
-      --danger: #c43b2b;
-      --success: #3e8247;
-      --shadow: 0 4px 16px rgba(48, 38, 22, 0.08);
-    }
-
-    * {
-      box-sizing: border-box;
+      --accent-soft: rgba(176, 137, 30, 0.12);
+      --ember: #d14815;
+      --danger: #b82923;
+      --track-bg: #e3ded1;
     }
 
     body {
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-      background-color: var(--bg);
-      color: var(--text);
+      font-family: system-ui, -apple-system, sans-serif;
+      background-color: var(--bg-color);
+      color: var(--text-main);
       max-width: 460px;
       margin: 0 auto;
-      padding: 18px 16px 40px;
+      padding: 18px;
       transition: background-color 0.2s, color 0.2s;
     }
 
-    .header-bar {
+    .top-bar {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 16px;
-      padding-bottom: 10px;
-      border-bottom: 1px solid var(--border);
+      margin-bottom: 14px;
     }
 
-    .brand-title {
-      font-family: Georgia, "Times New Roman", serif;
+    .app-title {
+      font-family: var(--header-font);
       font-size: 1.35rem;
       font-weight: bold;
-      letter-spacing: 0.04em;
-      color: var(--accent);
-      margin: 0;
-      text-transform: uppercase;
-    }
-
-    .brand-sub {
-      font-size: 0.75rem;
-      color: var(--text-muted);
       letter-spacing: 0.06em;
       text-transform: uppercase;
+      color: var(--accent);
+      margin: 0;
+      display: flex;
+      align-items: center;
+      gap: 8px;
     }
 
     .icon {
       width: 17px;
       height: 17px;
       vertical-align: -3px;
-      fill: none;
-      stroke: currentColor;
-      stroke-width: 2;
-      stroke-linecap: round;
-      stroke-linejoin: round;
       flex-shrink: 0;
     }
 
-    .btn-inline {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 7px;
+    .icon-sm {
+      width: 14px;
+      height: 14px;
+      vertical-align: -2px;
+      flex-shrink: 0;
     }
 
-    .theme-toggle {
-      background: var(--surface);
-      color: var(--text);
-      border: 1px solid var(--border);
-      padding: 7px 11px;
-      border-radius: 8px;
-      font-size: 0.8rem;
-      font-weight: 600;
-      cursor: pointer;
+    .theme-btn {
       width: auto;
+      padding: 7px 12px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      background: var(--card-bg);
+      color: var(--text-main);
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
     }
 
     .card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      padding: 16px;
-      border-radius: 12px;
+      background: var(--card-bg);
+      padding: 18px;
+      border-radius: 10px;
       margin-bottom: 16px;
-      box-shadow: var(--shadow);
+      border: 1px solid var(--border-color);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
     }
 
-    .section-label {
-      font-size: 0.78rem;
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
-      color: var(--accent);
-      font-weight: 700;
-      margin-bottom: 8px;
-      display: block;
-    }
-
-    .mode-tabs {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 8px;
-      margin-bottom: 14px;
-    }
-
-    .tab-btn {
-      padding: 10px 8px;
+    .mode-toggle {
+      display: flex;
+      background: var(--input-bg);
       border-radius: 8px;
-      border: 1px solid var(--border);
-      background: var(--surface-alt);
-      color: var(--text-muted);
-      font-size: 0.88rem;
-      font-weight: 700;
-      cursor: pointer;
-      transition: all 0.15s;
+      padding: 4px;
+      margin-bottom: 16px;
+      border: 1px solid var(--border-color);
+      gap: 4px;
     }
 
-    .tab-btn.active {
+    .mode-btn {
+      flex: 1;
+      padding: 9px;
+      border: none;
+      border-radius: 6px;
+      background: transparent;
+      color: var(--text-muted);
+      font-size: 0.85rem;
+      font-weight: 700;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: 0.15s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+
+    .mode-btn.active {
       background: var(--accent);
       color: var(--accent-text);
-      border-color: var(--accent);
     }
 
     .preset-box {
-      background: var(--surface-alt);
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      padding: 11px;
+      background: var(--sub-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 10px;
       margin-bottom: 14px;
     }
 
@@ -165,20 +159,158 @@
       align-items: center;
     }
 
-    select, input[type="number"], input[type="text"], input[type="password"] {
-      width: 100%;
-      padding: 11px 12px;
-      border-radius: 8px;
-      border: 1px solid var(--border);
-      background: var(--bg);
-      color: var(--text);
-      font-size: 1rem;
-      margin-bottom: 10px;
+    .preset-row select {
+      flex: 1;
+      margin-bottom: 0;
+      padding: 9px 10px;
+      font-size: 0.92rem;
     }
 
-    select {
-      margin-bottom: 0;
+    .btn-icon-del {
+      width: auto;
+      padding: 9px 11px;
+      background: var(--input-bg);
+      color: var(--danger);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
       cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .btn-save-preset {
+      width: 100%;
+      padding: 11px;
+      margin-bottom: 10px;
+      background: var(--accent-soft);
+      color: var(--accent);
+      border: 1.5px solid var(--accent);
+      border-radius: 8px;
+      font-size: 0.88rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 7px;
+      transition: background 0.15s;
+    }
+
+    .btn-save-preset:hover {
+      background: rgba(212, 175, 55, 0.24);
+    }
+
+    .scanner-section {
+      background: var(--sub-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 10px;
+      margin-bottom: 14px;
+    }
+
+    .btn-scan {
+      width: 100%;
+      padding: 11px;
+      background: var(--input-bg);
+      color: var(--accent);
+      border: 1px solid var(--accent);
+      border-radius: 6px;
+      font-size: 0.88rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    #reader {
+      width: 100%;
+      margin-top: 10px;
+      border-radius: 6px;
+      overflow: hidden;
+      display: none;
+    }
+
+    .scan-status {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-top: 7px;
+      text-align: center;
+      min-height: 16px;
+    }
+
+    .api-key-toggle {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      text-align: center;
+      margin-top: 6px;
+      cursor: pointer;
+      text-decoration: underline;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+    }
+
+    .api-key-box {
+      display: none;
+      margin-top: 8px;
+      padding-top: 8px;
+      border-top: 1px dashed var(--border-color);
+    }
+
+    .api-key-row {
+      display: flex;
+      gap: 6px;
+    }
+
+    .api-key-row input {
+      margin-bottom: 0;
+      padding: 7px 9px;
+      font-size: 0.82rem;
+    }
+
+    .btn-small {
+      width: auto;
+      padding: 7px 11px;
+      background: var(--accent);
+      color: var(--accent-text);
+      font-size: 0.78rem;
+      border-radius: 6px;
+      border: none;
+      font-weight: bold;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    label {
+      display: block;
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 5px;
+    }
+
+    input, select {
+      width: 100%;
+      box-sizing: border-box;
+      padding: 11px;
+      margin-bottom: 12px;
+      border-radius: 8px;
+      border: 1px solid var(--border-color);
+      background: var(--input-bg);
+      color: var(--text-main);
+      font-size: 1rem;
     }
 
     input:focus, select:focus {
@@ -186,176 +318,28 @@
       border-color: var(--accent);
     }
 
-    .btn-icon-sq {
-      width: 42px;
-      height: 42px;
-      padding: 0;
-      border-radius: 8px;
-      border: 1px solid var(--border);
-      background: var(--surface);
-      color: var(--danger);
-      cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
-    }
-
-    .scanner-box {
-      background: var(--surface-alt);
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      padding: 11px;
-      margin-bottom: 14px;
-    }
-
-    .btn-scan {
-      width: 100%;
-      padding: 11px;
-      border-radius: 8px;
-      border: 1px solid var(--accent);
-      background: transparent;
-      color: var(--accent);
-      font-size: 0.92rem;
-      font-weight: 700;
-      cursor: pointer;
-    }
-
-    .btn-scan:hover {
-      background: rgba(212, 163, 56, 0.12);
-    }
-
-    #reader {
-      width: 100%;
-      margin-top: 10px;
-      border-radius: 8px;
-      overflow: hidden;
-      display: none;
-    }
-
-    .scan-status {
-      font-size: 0.82rem;
-      color: var(--text-muted);
-      margin-top: 7px;
-      text-align: center;
-      min-height: 16px;
-    }
-
-    .api-config-toggle {
-      display: inline-flex;
-      align-items: center;
-      gap: 5px;
-      font-size: 0.76rem;
-      color: var(--text-muted);
-      background: none;
-      border: none;
-      padding: 4px 0 0;
-      cursor: pointer;
-      text-decoration: underline;
-      margin-top: 4px;
-    }
-
-    .api-config-panel {
-      display: none;
-      margin-top: 10px;
-      padding-top: 10px;
-      border-top: 1px dashed var(--border);
-    }
-
-    .api-row {
-      display: flex;
-      gap: 6px;
-    }
-
-    .api-row input {
-      margin-bottom: 0;
-      font-size: 0.88rem;
-      padding: 9px 10px;
-    }
-
-    .btn-small {
-      padding: 9px 12px;
-      border-radius: 8px;
-      border: none;
-      background: var(--accent);
-      color: var(--accent-text);
-      font-weight: 700;
-      font-size: 0.82rem;
-      cursor: pointer;
-      white-space: nowrap;
-    }
-
-    label.field-label {
-      display: block;
-      font-size: 0.84rem;
-      color: var(--text-muted);
-      margin-bottom: 4px;
-    }
-
-    .grid-2 {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 10px;
-    }
-
     .result-box {
       text-align: center;
       padding: 12px;
-      background: var(--surface-alt);
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      margin: 4px 0 12px;
+      background: var(--accent-soft);
+      border: 1px solid var(--accent);
+      border-radius: 8px;
+      margin-bottom: 14px;
+    }
+
+    .result-label {
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-muted);
+      margin-bottom: 2px;
     }
 
     .result-number {
-      font-family: Georgia, "Times New Roman", serif;
+      font-family: var(--header-font);
       font-size: 2rem;
       font-weight: bold;
       color: var(--accent);
-      line-height: 1.1;
-    }
-
-    .btn-preset-save {
-      width: 100%;
-      padding: 9px;
-      border-radius: 8px;
-      border: 1px dashed var(--border);
-      background: transparent;
-      color: var(--text-muted);
-      font-size: 0.84rem;
-      font-weight: 600;
-      cursor: pointer;
-      margin-bottom: 12px;
-    }
-
-    .btn-preset-save:hover {
-      border-color: var(--accent);
-      color: var(--accent);
-    }
-
-    .meal-selector {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 6px;
-      margin-bottom: 12px;
-    }
-
-    .meal-btn {
-      padding: 8px 4px;
-      border-radius: 8px;
-      border: 1px solid var(--border);
-      background: var(--surface-alt);
-      color: var(--text-muted);
-      font-size: 0.78rem;
-      font-weight: 700;
-      cursor: pointer;
-      text-align: center;
-    }
-
-    .meal-btn.active {
-      background: var(--accent);
-      color: var(--accent-text);
-      border-color: var(--accent);
     }
 
     .btn-primary {
@@ -363,124 +347,189 @@
       padding: 13px;
       border: none;
       border-radius: 8px;
+      font-size: 0.95rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      cursor: pointer;
       background: var(--accent);
       color: var(--accent-text);
-      font-size: 1rem;
-      font-weight: 800;
-      letter-spacing: 0.02em;
-      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
     }
 
     .btn-primary:hover {
       background: var(--accent-hover);
     }
 
-    .target-row {
+    .btn-clear {
+      width: 100%;
+      background: transparent;
+      color: var(--text-muted);
+      border: 1px solid var(--border-color);
+      margin-top: 12px;
+      padding: 10px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      border-radius: 8px;
+      cursor: pointer;
       display: flex;
-      justify-content: space-between;
       align-items: center;
-      gap: 10px;
-      margin-bottom: 10px;
+      justify-content: center;
+      gap: 7px;
     }
 
-    .target-row input {
-      width: 120px;
-      margin-bottom: 0;
+    .btn-clear:hover {
+      border-color: var(--danger);
+      color: var(--danger);
+    }
+
+    .goal-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 12px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .goal-row label {
+      margin: 0;
+      white-space: nowrap;
+    }
+
+    .goal-row input {
+      width: 130px;
+      margin: 0;
       padding: 8px 10px;
       text-align: right;
-      font-weight: 700;
+      font-weight: bold;
     }
 
     .tally-header {
       display: flex;
       justify-content: space-between;
       align-items: baseline;
+      font-family: var(--header-font);
+      font-size: 1.15rem;
+      font-weight: bold;
       margin-bottom: 8px;
     }
 
-    .tally-title {
-      font-family: Georgia, "Times New Roman", serif;
-      font-size: 1.15rem;
-      font-weight: bold;
-    }
-
-    .tally-total {
-      font-size: 1.35rem;
-      font-weight: 800;
-      color: var(--accent);
-    }
-
-    .progress-track {
+    .progress-container {
       width: 100%;
       height: 10px;
-      background: var(--surface-alt);
-      border-radius: 999px;
+      background: var(--track-bg);
+      border-radius: 5px;
       overflow: hidden;
-      border: 1px solid var(--border);
-      margin-bottom: 6px;
+      margin-bottom: 8px;
     }
 
-    .progress-fill {
+    .progress-bar {
       height: 100%;
       width: 0%;
       background: var(--accent);
       transition: width 0.25s ease, background-color 0.25s ease;
     }
 
-    .progress-fill.over {
-      background: var(--danger);
+    .progress-bar.over {
+      background: var(--ember);
     }
 
-    .progress-meta {
+    .goal-stats {
       display: flex;
       justify-content: space-between;
-      font-size: 0.82rem;
+      font-size: 0.85rem;
       color: var(--text-muted);
       margin-bottom: 14px;
     }
 
     .over-text {
-      color: var(--danger);
-      font-weight: 700;
+      color: var(--ember);
+      font-weight: bold;
     }
 
-    .meal-group {
-      margin-bottom: 12px;
-      padding-top: 8px;
-      border-top: 1px solid var(--border);
+    .meal-section {
+      background: var(--sub-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 10px 12px;
+      margin-bottom: 10px;
     }
 
-    .meal-group-header {
+    .meal-header {
       display: flex;
       justify-content: space-between;
-      font-size: 0.86rem;
-      font-weight: 700;
+      align-items: center;
+      font-family: var(--header-font);
+      font-weight: bold;
+      font-size: 0.95rem;
       color: var(--accent);
-      margin-bottom: 4px;
+      padding-bottom: 6px;
+      border-bottom: 1px solid var(--border-color);
+      margin-bottom: 6px;
     }
 
-    ul.log-list {
+    ul {
       list-style: none;
       padding: 0;
       margin: 0;
     }
 
-    ul.log-list li {
+    li {
       display: flex;
       justify-content: space-between;
       align-items: center;
+      gap: 8px;
       padding: 6px 0;
+      border-bottom: 1px solid var(--border-color);
       font-size: 0.9rem;
-      border-bottom: 1px solid rgba(128, 128, 128, 0.12);
     }
 
-    ul.log-list li:last-child {
+    li:last-child {
       border-bottom: none;
+      padding-bottom: 0;
     }
 
-    .empty-note {
-      font-size: 0.8rem;
+    .item-left {
+      flex: 1;
+      min-width: 0;
+      word-break: break-word;
+    }
+
+    .item-right {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-shrink: 0;
+    }
+
+    .move-select {
+      width: auto;
+      margin: 0;
+      padding: 3px 5px;
+      font-size: 0.74rem;
+      font-weight: 600;
+      border-radius: 5px;
+      border: 1px solid var(--border-color);
+      background: var(--input-bg);
       color: var(--text-muted);
+      cursor: pointer;
+    }
+
+    .move-select:focus {
+      border-color: var(--accent);
+      color: var(--text-main);
+    }
+
+    .empty-msg {
+      color: var(--text-muted);
+      font-size: 0.82rem;
       font-style: italic;
       padding: 2px 0;
     }
@@ -488,242 +537,609 @@
     .delete-item {
       color: var(--danger);
       cursor: pointer;
-      margin-left: 10px;
+      margin-left: 4px;
       font-weight: bold;
-      padding: 2px 6px;
+      font-size: 1.05rem;
+      line-height: 1;
     }
 
-    .btn-reset {
-      width: 100%;
-      padding: 11px;
-      margin-top: 10px;
-      border-radius: 8px;
-      border: 1px solid var(--border);
-      background: var(--surface-alt);
-      color: var(--text-muted);
-      font-size: 0.88rem;
-      font-weight: 700;
-      cursor: pointer;
-    }
-
-    .btn-reset:hover {
-      border-color: var(--danger);
-      color: var(--danger);
+    .hidden {
+      display: none !important;
     }
   </style>
 </head>
 <body>
 
-  <div class="header-bar">
-    <div>
-      <h1 class="brand-title">Panem Ration Tracker</h1>
-      <div class="brand-sub">District 12 Supply Ledger</div>
-    </div>
-    <button class="theme-toggle btn-inline" id="themeToggle" onclick="toggleTheme()">
-      <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
-      <span id="themeLabel">Capitol Light</span>
+  <div class="top-bar">
+    <h1 class="app-title">
+      <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L15 8L21 9L17 14L18 20L12 17L6 20L7 14L3 9L9 8L12 2Z"/></svg>
+      Panem Rations
+    </h1>
+    <button type="button" class="theme-btn" id="themeToggle" onclick="toggleTheme()">
+      <svg class="icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+      Capitol Light
     </button>
   </div>
 
   <div class="card">
-    <div class="mode-tabs">
-      <button class="tab-btn active btn-inline" id="tabWeigh" onclick="setMode('weigh')">
-        <svg class="icon" viewBox="0 0 24 24"><path d="M12 3v18M5 8l7-3 7 3M3 14c0 2.2 1.8 4 4 4s4-1.8 4-4L7 8l-4 6zm10 0c0 2.2 1.8 4 4 4s4-1.8 4-4l-4-6-4 6z"/></svg>
-        <span>Weigh Rations</span>
+    <div class="mode-toggle">
+      <button type="button" id="btnWeighMode" class="mode-btn active" onclick="setMode('weigh')">
+        <svg class="icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v18"/><path d="M3 7h18"/><path d="M5 7l-2 9h6l-2-9"/><path d="M19 7l-2 9h6l-2-9"/></svg>
+        Weigh Rations
       </button>
-      <button class="tab-btn btn-inline" id="tabDirect" onclick="setMode('direct')">
-        <svg class="icon" viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
-        <span>Direct Supply</span>
+      <button type="button" id="btnDirectMode" class="mode-btn" onclick="setMode('direct')">
+        <svg class="icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+        Direct Supply
       </button>
     </div>
 
-    <div id="weighSection">
+    <div id="weighFields">
       <div class="preset-box">
-        <span class="section-label">Saved Custom Presets (Offline)</span>
+        <label for="presetSelect">Saved Weigh Presets (Offline)</label>
         <div class="preset-row">
-          <select id="presetSelect" onchange="applyPreset()">
+          <select id="presetSelect" onchange="applyWeighPreset()">
             <option value="">-- Select a saved ration --</option>
           </select>
-          <button class="btn-icon-sq" title="Delete selected preset" onclick="deletePreset()">
-            <svg class="icon" viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+          <button type="button" class="btn-icon-del" onclick="deleteWeighPreset()" title="Delete selected preset">
+            <svg class="icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
           </button>
         </div>
       </div>
 
-      <div class="scanner-box">
-        <button class="btn-scan btn-inline" id="scanBtn" onclick="toggleScanner()">
-          <svg class="icon" viewBox="0 0 24 24"><path d="M3 7V5a2 2 0 0 1 2-2h2M17 3h2a2 2 0 0 1 2 2v2M21 17v2a2 2 0 0 1-2 2h-2M7 21H5a2 2 0 0 1-2-2v-2"/><line x1="7" y1="8" x2="7" y2="16"/><line x1="10" y1="8" x2="10" y2="16"/><line x1="14" y1="8" x2="14" y2="16"/><line x1="17" y1="8" x2="17" y2="16"/></svg>
-          <span id="scanBtnText">Scan Supply Barcode</span>
+      <div class="scanner-section">
+        <button type="button" class="btn-scan" id="scanBtn" onclick="toggleScanner()">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7V5a2 2 0 0 1 2-2h2"/><path d="M17 3h2a2 2 0 0 1 2 2v2"/><path d="M21 17v2a2 2 0 0 1-2 2h-2"/><path d="M7 21H5a2 2 0 0 1-2-2v-2"/><line x1="7" y1="8" x2="7" y2="16"/><line x1="10" y1="8" x2="10" y2="16"/><line x1="14" y1="8" x2="14" y2="16"/><line x1="17" y1="8" x2="17" y2="16"/></svg>
+          Scan Supply Barcode
         </button>
         <div id="reader"></div>
-        <div class="scan-status" id="scanStatus">USDA Official First + Open Food Facts Backup</div>
+        <div class="scan-status" id="scanStatus">USDA FoodData Central + Open Food Facts Backup</div>
 
-        <button class="api-config-toggle" onclick="toggleApiConfig()">
-          <svg class="icon" style="width:13px;height:13px;" viewBox="0 0 24 24"><circle cx="7.5" cy="15.5" r="5.5"/><path d="m21 2-9.6 9.6M15.5 7.5l3 3L22 7l-3-3"/></svg>
-          <span>Configure USDA API Key</span>
-        </button>
-        <div class="api-config-panel" id="apiConfigPanel">
-          <div class="api-row">
-            <input type="password" id="usdaKeyInput" placeholder="Paste USDA API key (default: DEMO_KEY)">
-            <button class="btn-small" onclick="saveApiKey()">Save</button>
+        <div class="api-key-toggle" onclick="toggleApiKeyBox()">
+          <svg class="icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"/></svg>
+          Configure USDA API Key (<span id="keyBadge">Using DEMO_KEY</span>)
+        </div>
+        <div class="api-key-box" id="apiKeyBox">
+          <div class="api-key-row">
+            <input type="text" id="usdaKeyInput" placeholder="Paste free USDA API key">
+            <button type="button" class="btn-small" onclick="saveUsdaKey()">
+              <svg class="icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+              Save
+            </button>
           </div>
         </div>
       </div>
 
-      <div class="grid-2">
-        <div>
-          <label class="field-label" for="servingGrams">Grams per serving</label>
-          <input type="number" id="servingGrams" inputmode="decimal" placeholder="e.g. 30" oninput="calculate()">
-        </div>
-        <div>
-          <label class="field-label" for="servingCals">Calories per serving</label>
-          <input type="number" id="servingCals" inputmode="decimal" placeholder="e.g. 120" oninput="calculate()">
-        </div>
-      </div>
+      <label for="servingGrams">Grams per portion (label)</label>
+      <input type="number" id="servingGrams" inputmode="decimal" placeholder="e.g. 112" oninput="calculate()">
 
-      <label class="field-label" for="foodGrams">Your ration weight (grams)</label>
-      <input type="number" id="foodGrams" inputmode="decimal" placeholder="e.g. 45" oninput="calculate()">
+      <label for="servingCals">Calories per portion (label)</label>
+      <input type="number" id="servingCals" inputmode="decimal" placeholder="e.g. 160" oninput="calculate()">
+
+      <label for="foodGrams">Measured ration weight (grams)</label>
+      <input type="number" id="foodGrams" inputmode="decimal" placeholder="e.g. 168" oninput="calculate()">
 
       <div class="result-box">
-        <div style="font-size: 0.8rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em;">Calculated Energy</div>
-        <div class="result-number"><span id="calcResult">0</span> <span style="font-size: 1rem;">kcal</span></div>
+        <div class="result-label">Calculated Ration Value</div>
+        <div class="result-number"><span id="result">0</span> kcal</div>
       </div>
-
-      <button class="btn-preset-save btn-inline" onclick="saveCurrentAsPreset()">
-        <svg class="icon" viewBox="0 0 24 24"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
-        <span>Save Current Food as Preset</span>
-      </button>
     </div>
 
-    <div id="directSection" style="display: none;">
-      <label class="field-label" for="directCals">Total Calories (kcal)</label>
+    <div id="directFields" class="hidden">
+      <div class="preset-box">
+        <label for="directPresetSelect">Saved Direct Presets (Offline)</label>
+        <div class="preset-row">
+          <select id="directPresetSelect" onchange="applyDirectPreset()">
+            <option value="">-- Select a saved item --</option>
+          </select>
+          <button type="button" class="btn-icon-del" onclick="deleteDirectPreset()" title="Delete selected preset">
+            <svg class="icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+          </button>
+        </div>
+      </div>
+
+      <label for="directCals">Direct calorie intake (kcal)</label>
       <input type="number" id="directCals" inputmode="decimal" placeholder="e.g. 250">
     </div>
 
-    <label class="field-label" for="foodName">Ration Label (Optional)</label>
-    <input type="text" id="foodName" placeholder="e.g. Tesserae Oats">
+    <label for="mealCategory">Ration Period</label>
+    <select id="mealCategory">
+      <option value="Breakfast">Dawn Rations (Breakfast)</option>
+      <option value="Lunch">Midday Rations (Lunch)</option>
+      <option value="Dinner">Nightfall Rations (Dinner)</option>
+      <option value="Snack">Sponsor Parachute (Snack)</option>
+    </select>
 
-    <span class="section-label">Meal Period</span>
-    <div class="meal-selector">
-      <button class="meal-btn active" data-meal="breakfast" onclick="selectMeal('breakfast')">Dawn</button>
-      <button class="meal-btn" data-meal="lunch" onclick="selectMeal('lunch')">Midday</button>
-      <button class="meal-btn" data-meal="dinner" onclick="selectMeal('dinner')">Nightfall</button>
-      <button class="meal-btn" data-meal="snack" onclick="selectMeal('snack')">Sponsor</button>
-    </div>
+    <label for="foodName">Supply Description (Optional)</label>
+    <input type="text" id="foodName" placeholder="e.g. Tesserae Oats, District Bread">
 
-    <button class="btn-primary btn-inline" onclick="addToTally()">
-      <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
-      <span>Log Ration</span>
+    <button type="button" class="btn-save-preset" onclick="saveCurrentPreset()">
+      <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+      <span id="savePresetBtnText">Save Ration to Presets</span>
+    </button>
+
+    <button type="button" class="btn-primary" onclick="addToTally()">
+      <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
+      Log Ration
     </button>
   </div>
 
   <div class="card">
-    <div class="target-row">
-      <span class="section-label" style="margin:0;">Daily Tribute Allotment</span>
-      <input type="number" id="dailyTarget" inputmode="numeric" placeholder="Target kcal" oninput="saveTarget()">
+    <div class="goal-row">
+      <label for="dailyGoal">Daily Tribute Allotment</label>
+      <input type="number" id="dailyGoal" inputmode="numeric" placeholder="e.g. 2000" oninput="updateGoal()">
     </div>
 
     <div class="tally-header">
-      <span class="tally-title">Total Consumed</span>
-      <span class="tally-total"><span id="totalCals">0</span> kcal</span>
+      <span>Daily Ledger:</span>
+      <span style="color: var(--accent);"><span id="totalCals">0</span> kcal</span>
     </div>
 
-    <div id="progressSection" style="display: none;">
-      <div class="progress-track">
-        <div class="progress-fill" id="progressFill"></div>
+    <div id="goalProgressSection" class="hidden">
+      <div class="progress-container">
+        <div id="progressBar" class="progress-bar"></div>
       </div>
-      <div class="progress-meta">
+      <div class="goal-stats">
         <span id="percentText">0% of allotment</span>
         <span id="remainingText">0 kcal remaining</span>
       </div>
     </div>
 
-    <div class="meal-group">
-      <div class="meal-group-header">
-        <span>Dawn Rations (Breakfast)</span>
-        <span><span id="sub-breakfast">0</span> kcal</span>
+    <div class="meal-section">
+      <div class="meal-header">
+        <span>Dawn Rations</span>
+        <span><span id="total-Breakfast">0</span> kcal</span>
       </div>
-      <ul class="log-list" id="list-breakfast"></ul>
+      <ul id="list-Breakfast"></ul>
     </div>
 
-    <div class="meal-group">
-      <div class="meal-group-header">
-        <span>Midday Rations (Lunch)</span>
-        <span><span id="sub-lunch">0</span> kcal</span>
+    <div class="meal-section">
+      <div class="meal-header">
+        <span>Midday Rations</span>
+        <span><span id="total-Lunch">0</span> kcal</span>
       </div>
-      <ul class="log-list" id="list-lunch"></ul>
+      <ul id="list-Lunch"></ul>
     </div>
 
-    <div class="meal-group">
-      <div class="meal-group-header">
-        <span>Nightfall Rations (Dinner)</span>
-        <span><span id="sub-dinner">0</span> kcal</span>
+    <div class="meal-section">
+      <div class="meal-header">
+        <span>Nightfall Rations</span>
+        <span><span id="total-Dinner">0</span> kcal</span>
       </div>
-      <ul class="log-list" id="list-dinner"></ul>
+      <ul id="list-Dinner"></ul>
     </div>
 
-    <div class="meal-group">
-      <div class="meal-group-header">
-        <span>Sponsor Parachute (Snacks)</span>
-        <span><span id="sub-snack">0</span> kcal</span>
+    <div class="meal-section">
+      <div class="meal-header">
+        <span>Sponsor Parachute</span>
+        <span><span id="total-Snack">0</span> kcal</span>
       </div>
-      <ul class="log-list" id="list-snack"></ul>
+      <ul id="list-Snack"></ul>
     </div>
 
-    <button class="btn-reset btn-inline" onclick="confirmReset()">
-      <svg class="icon" viewBox="0 0 24 24"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/></svg>
-      <span>Cannon Reset (Clear Day)</span>
+    <button type="button" class="btn-clear" onclick="clearTally()">
+      <svg class="icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/></svg>
+      Cannon Reset (Clear Day)
     </button>
   </div>
 
   <script>
     let logs = JSON.parse(localStorage.getItem('calLogs')) || [];
-    let presets = JSON.parse(localStorage.getItem('calPresets')) || [];
+    let dailyGoal = parseFloat(localStorage.getItem('calGoal')) || 0;
+    let savedTheme = localStorage.getItem('calTheme') || 'dark';
+    let usdaApiKey = localStorage.getItem('usdaApiKey') || 'DEMO_KEY';
+    let weighPresets = JSON.parse(localStorage.getItem('calPresets')) || [];
+    let directPresets = JSON.parse(localStorage.getItem('calDirectPresets')) || [];
     let currentMode = 'weigh';
-    let selectedMeal = 'breakfast';
     let html5QrCode = null;
     let isScanning = false;
 
-    function init() {
-      const savedTheme = localStorage.getItem('panemTheme');
-      if (savedTheme === 'light') {
-        document.body.classList.add('light-theme');
-        document.getElementById('themeLabel').innerText = 'Arena Dark';
-      }
+    const CATEGORIES = ['Breakfast', 'Lunch', 'Dinner', 'Snack'];
+    const CATEGORY_SHORT = {
+      Breakfast: 'Dawn',
+      Lunch: 'Midday',
+      Dinner: 'Nightfall',
+      Snack: 'Sponsor'
+    };
 
-      const savedTarget = localStorage.getItem('calTarget');
-      if (savedTarget) {
-        document.getElementById('dailyTarget').value = savedTarget;
-      }
+    const SUN_ICON = '<svg class="icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>';
+    const MOON_ICON = '<svg class="icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>';
+    const SCAN_ICON = '<svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7V5a2 2 0 0 1 2-2h2"/><path d="M17 3h2a2 2 0 0 1 2 2v2"/><path d="M21 17v2a2 2 0 0 1-2 2h-2"/><path d="M7 21H5a2 2 0 0 1-2-2v-2"/><line x1="7" y1="8" x2="7" y2="16"/><line x1="10" y1="8" x2="10" y2="16"/><line x1="14" y1="8" x2="14" y2="16"/><line x1="17" y1="8" x2="17" y2="16"/></svg>';
+    const STOP_ICON = '<svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="6" width="12" height="12" rx="2"/></svg>';
 
-      const savedKey = localStorage.getItem('usdaApiKey');
-      if (savedKey) {
-        document.getElementById('usdaKeyInput').value = savedKey;
+    function applyTheme(theme) {
+      const btn = document.getElementById('themeToggle');
+      if (theme === 'light') {
+        document.body.classList.add('light-mode');
+        btn.innerHTML = MOON_ICON + ' Arena Dark';
+      } else {
+        document.body.classList.remove('light-mode');
+        btn.innerHTML = SUN_ICON + ' Capitol Light';
       }
-
-      renderPresets();
-      renderLogs();
+      localStorage.setItem('calTheme', theme);
     }
 
     function toggleTheme() {
-      const isLight = document.body.classList.toggle('light-theme');
-      localStorage.setItem('panemTheme', isLight ? 'light' : 'dark');
-      document.getElementById('themeLabel').innerText = isLight ? 'Arena Dark' : 'Capitol Light';
+      savedTheme = savedTheme === 'dark' ? 'light' : 'dark';
+      applyTheme(savedTheme);
+    }
+
+    applyTheme(savedTheme);
+
+    if (dailyGoal > 0) {
+      document.getElementById('dailyGoal').value = dailyGoal;
+    }
+
+    function updateKeyBadge() {
+      const badge = document.getElementById('keyBadge');
+      if (usdaApiKey && usdaApiKey !== 'DEMO_KEY') {
+        badge.innerText = 'Personal Key Saved';
+        document.getElementById('usdaKeyInput').value = usdaApiKey;
+      } else {
+        badge.innerText = 'Using DEMO_KEY';
+      }
+    }
+
+    updateKeyBadge();
+
+    function toggleApiKeyBox() {
+      const box = document.getElementById('apiKeyBox');
+      box.style.display = box.style.display === 'block' ? 'none' : 'block';
+    }
+
+    function saveUsdaKey() {
+      const val = document.getElementById('usdaKeyInput').value.trim();
+      usdaApiKey = val || 'DEMO_KEY';
+      localStorage.setItem('usdaApiKey', usdaApiKey);
+      updateKeyBadge();
+      document.getElementById('apiKeyBox').style.display = 'none';
+      document.getElementById('scanStatus').innerText = 'USDA API key saved locally.';
+    }
+
+    function renderAllPresets() {
+      const wSelect = document.getElementById('presetSelect');
+      const prevW = wSelect.value;
+      wSelect.innerHTML = '<option value="">-- Select a saved ration (' + weighPresets.length + ') --</option>';
+      weighPresets.forEach((p, idx) => {
+        const opt = document.createElement('option');
+        opt.value = idx;
+        opt.textContent = `${p.name} (${p.servingCals} kcal / ${p.servingGrams}g)`;
+        wSelect.appendChild(opt);
+      });
+      if (prevW !== '' && weighPresets[prevW]) {
+        wSelect.value = prevW;
+      }
+
+      const dSelect = document.getElementById('directPresetSelect');
+      const prevD = dSelect.value;
+      dSelect.innerHTML = '<option value="">-- Select a saved item (' + directPresets.length + ') --</option>';
+      directPresets.forEach((p, idx) => {
+        const opt = document.createElement('option');
+        opt.value = idx;
+        opt.textContent = `${p.name} (${p.cals} kcal)`;
+        dSelect.appendChild(opt);
+      });
+      if (prevD !== '' && directPresets[prevD]) {
+        dSelect.value = prevD;
+      }
+    }
+
+    renderAllPresets();
+
+    function saveCurrentPreset() {
+      if (currentMode === 'weigh') {
+        const sg = parseFloat(document.getElementById('servingGrams').value);
+        const sc = parseFloat(document.getElementById('servingCals').value);
+        let name = document.getElementById('foodName').value.trim();
+
+        if (!(sg > 0 && sc >= 0)) {
+          alert('Enter valid grams per portion and calories per portion before saving a preset.');
+          return;
+        }
+        if (!name) {
+          name = prompt('Enter a name for this ration preset:');
+          if (!name || !name.trim()) return;
+          name = name.trim();
+          document.getElementById('foodName').value = name;
+        }
+
+        weighPresets.push({ name, servingGrams: sg, servingCals: sc });
+        weighPresets.sort((a, b) => a.name.localeCompare(b.name));
+        localStorage.setItem('calPresets', JSON.stringify(weighPresets));
+        renderAllPresets();
+        const savedIdx = weighPresets.findIndex(p => p.name === name && p.servingGrams === sg && p.servingCals === sc);
+        if (savedIdx >= 0) document.getElementById('presetSelect').value = savedIdx;
+        alert(`Saved "${name}" to Weigh Presets.`);
+      } else {
+        const dc = Math.round(parseFloat(document.getElementById('directCals').value));
+        let name = document.getElementById('foodName').value.trim();
+
+        if (!(dc > 0)) {
+          alert('Enter direct calorie intake before saving a preset.');
+          return;
+        }
+        if (!name) {
+          name = prompt('Enter a name for this direct calorie preset:');
+          if (!name || !name.trim()) return;
+          name = name.trim();
+          document.getElementById('foodName').value = name;
+        }
+
+        directPresets.push({ name, cals: dc });
+        directPresets.sort((a, b) => a.name.localeCompare(b.name));
+        localStorage.setItem('calDirectPresets', JSON.stringify(directPresets));
+        renderAllPresets();
+        const savedIdx = directPresets.findIndex(p => p.name === name && p.cals === dc);
+        if (savedIdx >= 0) document.getElementById('directPresetSelect').value = savedIdx;
+        alert(`Saved "${name}" (${dc} kcal) to Direct Presets.`);
+      }
+    }
+
+    function applyWeighPreset() {
+      const idx = document.getElementById('presetSelect').value;
+      if (idx === '') return;
+      const p = weighPresets[idx];
+      if (!p) return;
+      document.getElementById('servingGrams').value = p.servingGrams;
+      document.getElementById('servingCals').value = p.servingCals;
+      document.getElementById('foodName').value = p.name;
+      calculate();
+      document.getElementById('foodGrams').focus();
+    }
+
+    function deleteWeighPreset() {
+      const idx = document.getElementById('presetSelect').value;
+      if (idx === '') return;
+      const p = weighPresets[idx];
+      if (!p) return;
+      if (confirm(`Remove "${p.name}" from saved weigh presets?`)) {
+        weighPresets.splice(idx, 1);
+        localStorage.setItem('calPresets', JSON.stringify(weighPresets));
+        renderAllPresets();
+      }
+    }
+
+    function applyDirectPreset() {
+      const idx = document.getElementById('directPresetSelect').value;
+      if (idx === '') return;
+      const p = directPresets[idx];
+      if (!p) return;
+      document.getElementById('directCals').value = p.cals;
+      document.getElementById('foodName').value = p.name;
+    }
+
+    function deleteDirectPreset() {
+      const idx = document.getElementById('directPresetSelect').value;
+      if (idx === '') return;
+      const p = directPresets[idx];
+      if (!p) return;
+      if (confirm(`Remove "${p.name}" from saved direct presets?`)) {
+        directPresets.splice(idx, 1);
+        localStorage.setItem('calDirectPresets', JSON.stringify(directPresets));
+        renderAllPresets();
+      }
     }
 
     function setMode(mode) {
       currentMode = mode;
-      document.getElementById('tabWeigh').classList.toggle('active', mode === 'weigh');
-      document.getElementById('tabDirect').classList.toggle('active', mode === 'direct');
-      document.getElementById('weighSection').style.display = mode === 'weigh' ? 'block' : 'none';
-      document.getElementById('directSection').style.display = mode === 'direct' ? 'block' : 'none';
+      const weighFields = document.getElementById('weighFields');
+      const directFields = document.getElementById('directFields');
+      const btnWeigh = document.getElementById('btnWeighMode');
+      const btnDirect = document.getElementById('btnDirectMode');
+      const saveBtnText = document.getElementById('savePresetBtnText');
+
+      if (mode === 'weigh') {
+        weighFields.classList.remove('hidden');
+        directFields.classList.add('hidden');
+        btnWeigh.classList.add('active');
+        btnDirect.classList.remove('active');
+        saveBtnText.innerText = 'Save Ration to Presets';
+      } else {
+        if (isScanning) stopScanner();
+        weighFields.classList.add('hidden');
+        directFields.classList.remove('hidden');
+        btnDirect.classList.add('active');
+        btnWeigh.classList.remove('active');
+        saveBtnText.innerText = 'Save Direct Item to Presets';
+      }
     }
 
-    function selectMeal(meal) {
-      selectedMeal = meal;
-      document.querySelectorAll('.meal-btn').forEach(btn => {
-        btn.classList.toggle('active', btn.dataset.meal === meal);
+    function toggleScanner() {
+      if (isScanning) {
+        stopScanner();
+      } else {
+        startScanner();
+      }
+    }
+
+    function startScanner() {
+      const readerEl = document.getElementById('reader');
+      const statusEl = document.getElementById('scanStatus');
+      const scanBtn = document.getElementById('scanBtn');
+
+      if (typeof Html5Qrcode === 'undefined') {
+        statusEl.innerText = 'Scanner library still loading—try again in a second.';
+        return;
+      }
+
+      readerEl.style.display = 'block';
+      statusEl.innerText = 'Requesting camera access...';
+      scanBtn.innerHTML = STOP_ICON + ' Stop Scanner';
+
+      html5QrCode = new Html5Qrcode('reader');
+      html5QrCode.start(
+        { facingMode: 'environment' },
+        { fps: 10, qrbox: { width: 240, height: 140 } },
+        (decodedText) => {
+          stopScanner();
+          lookupBarcode(decodedText);
+        },
+        () => {}
+      ).then(() => {
+        isScanning = true;
+        statusEl.innerText = 'Point camera at supply barcode...';
+      }).catch(() => {
+        readerEl.style.display = 'none';
+        scanBtn.innerHTML = SCAN_ICON + ' Scan Supply Barcode';
+        statusEl.innerText = 'Camera blocked (requires HTTPS host).';
       });
+    }
+
+    function stopScanner() {
+      const readerEl = document.getElementById('reader');
+      const scanBtn = document.getElementById('scanBtn');
+      if (html5QrCode && isScanning) {
+        html5QrCode.stop().then(() => {
+          html5QrCode.clear();
+          readerEl.style.display = 'none';
+          isScanning = false;
+          scanBtn.innerHTML = SCAN_ICON + ' Scan Supply Barcode';
+        }).catch(() => {
+          readerEl.style.display = 'none';
+          isScanning = false;
+          scanBtn.innerHTML = SCAN_ICON + ' Scan Supply Barcode';
+        });
+      } else {
+        readerEl.style.display = 'none';
+        isScanning = false;
+        scanBtn.innerHTML = SCAN_ICON + ' Scan Supply Barcode';
+      }
+    }
+
+    function normalizeBarcodeCandidates(rawCode) {
+      const digits = rawCode.replace(/\D/g, '');
+      const list = [digits];
+      if (digits.length === 12) list.push('0' + digits);
+      if (digits.length === 13 && digits.startsWith('0')) list.push(digits.slice(1));
+      return [...new Set(list)];
+    }
+
+    async function lookupUSDA(barcode) {
+      const candidates = normalizeBarcodeCandidates(barcode);
+      for (const code of candidates) {
+        const url = `https://api.nal.usda.gov/fdc/v1/foods/search?api_key=${encodeURIComponent(usdaApiKey)}&query=gtinUpc:${code}&dataType=Branded&pageSize=1`;
+        const res = await fetch(url);
+        if (res.status === 429) throw new Error('RATE_LIMIT');
+        if (res.status === 403) throw new Error('INVALID_KEY');
+        if (!res.ok) continue;
+
+        const data = await res.json();
+        if (data.foods && data.foods.length > 0) {
+          const food = data.foods[0];
+          const kcalNutrient = (food.foodNutrients || []).find(
+            n => n.nutrientId === 1008 || (n.nutrientName && n.nutrientName.toLowerCase() === 'energy' && n.unitName === 'KCAL')
+          );
+          if (kcalNutrient && kcalNutrient.value !== undefined) {
+            let name = food.description || '';
+            name = name.toLowerCase().replace(/\w/g, c => c.toUpperCase());
+            if (food.brandOwner) {
+              const brand = food.brandOwner.toLowerCase().replace(/\w/g, c => c.toUpperCase());
+              if (!name.toLowerCase().includes(brand.toLowerCase())) {
+                name = `${brand} ${name}`;
+              }
+            }
+
+            const kcal100 = parseFloat(kcalNutrient.value);
+            let servingGrams = 100;
+            let servingCals = Math.round(kcal100);
+            let usedPackageServing = false;
+
+            const sSize = parseFloat(food.servingSize);
+            const sUnit = (food.servingSizeUnit || '').trim().toLowerCase();
+            if (sSize > 0 && (sUnit === 'g' || sUnit === 'grm' || sUnit === 'grams' || sUnit === 'gram')) {
+              servingGrams = Math.round(sSize * 10) / 10;
+              servingCals = Math.round((kcal100 / 100) * sSize);
+              usedPackageServing = true;
+            }
+
+            return {
+              source: 'USDA Official',
+              name: name.trim(),
+              servingGrams,
+              servingCals,
+              usedPackageServing
+            };
+          }
+        }
+      }
+      return null;
+    }
+
+    async function lookupOpenFoodFacts(barcode) {
+      const res = await fetch(`https://world.openfoodfacts.org/api/v2/product/${encodeURIComponent(barcode)}.json`);
+      if (!res.ok) return null;
+      const data = await res.json();
+      if (data.status === 1 && data.product) {
+        const p = data.product;
+        const n = p.nutriments || {};
+        const name = p.product_name || p.generic_name || '';
+
+        const sQty = parseFloat(p.serving_quantity);
+        const sUnit = (p.serving_quantity_unit || 'g').trim().toLowerCase();
+        const kcalServing = n['energy-kcal_serving'] !== undefined ? parseFloat(n['energy-kcal_serving']) : NaN;
+
+        if (sQty > 0 && (sUnit === 'g' || sUnit === 'grams' || sUnit === 'gram') && !isNaN(kcalServing)) {
+          return {
+            source: 'Open Food Facts',
+            name: name.trim(),
+            servingGrams: Math.round(sQty * 10) / 10,
+            servingCals: Math.round(kcalServing),
+            usedPackageServing: true
+          };
+        }
+
+        const kcal100 = n['energy-kcal_100g'] !== undefined
+          ? parseFloat(n['energy-kcal_100g'])
+          : (n['energy_100g'] !== undefined ? parseFloat(n['energy_100g']) / 4.184 : NaN);
+
+        if (!isNaN(kcal100)) {
+          return {
+            source: 'Open Food Facts',
+            name: name.trim(),
+            servingGrams: 100,
+            servingCals: Math.round(kcal100),
+            usedPackageServing: false
+          };
+        }
+      }
+      return null;
+    }
+
+    async function lookupBarcode(code) {
+      const statusEl = document.getElementById('scanStatus');
+      statusEl.innerText = `Checking USDA database for ${code}...`;
+
+      try {
+        let item = null;
+        try {
+          item = await lookupUSDA(code);
+        } catch (err) {
+          if (err.message === 'RATE_LIMIT') {
+            statusEl.innerText = 'USDA hourly limit hit — checking Open Food Facts...';
+          } else if (err.message === 'INVALID_KEY') {
+            statusEl.innerText = 'Invalid USDA API key — checking Open Food Facts...';
+          }
+        }
+
+        if (!item) {
+          statusEl.innerText = `Not in USDA — checking Open Food Facts for ${code}...`;
+          item = await lookupOpenFoodFacts(code);
+        }
+
+        if (item) {
+          document.getElementById('servingGrams').value = item.servingGrams;
+          document.getElementById('servingCals').value = item.servingCals;
+          if (item.name) document.getElementById('foodName').value = item.name;
+          calculate();
+          const servingNote = item.usedPackageServing ? 'package serving' : '100g standard';
+          const verifyNote = item.source === 'Open Food Facts' ? ' — verify vs box' : '';
+          statusEl.innerText = `[${item.source} • ${servingNote}${verifyNote}] ${item.name || code}: ${item.servingCals} kcal per ${item.servingGrams}g`;
+          document.getElementById('foodGrams').focus();
+        } else {
+          statusEl.innerText = `Barcode ${code} not found in USDA or Open Food Facts.`;
+        }
+      } catch (err) {
+        statusEl.innerText = 'Network error — check internet connection.';
+      }
     }
 
     function calculate() {
@@ -733,274 +1149,54 @@
 
       if (sg > 0 && sc >= 0 && fg >= 0) {
         const cals = Math.round((sc / sg) * fg);
-        document.getElementById('calcResult').innerText = cals;
+        document.getElementById('result').innerText = cals;
         return cals;
       } else {
-        document.getElementById('calcResult').innerText = '0';
+        document.getElementById('result').innerText = '0';
         return 0;
       }
     }
 
-    function renderPresets() {
-      const select = document.getElementById('presetSelect');
-      select.innerHTML = '<option value="">-- Select a saved ration --</option>';
-      presets.forEach((p, idx) => {
-        const opt = document.createElement('option');
-        opt.value = idx;
-        opt.textContent = `${p.name} (${p.servingGrams}g = ${p.servingCals} kcal)`;
-        select.appendChild(opt);
-      });
-    }
-
-    function applyPreset() {
-      const idx = document.getElementById('presetSelect').value;
-      if (idx === '') return;
-      const p = presets[parseInt(idx, 10)];
-      if (!p) return;
-
-      document.getElementById('servingGrams').value = p.servingGrams;
-      document.getElementById('servingCals').value = p.servingCals;
-      document.getElementById('foodName').value = p.name;
-      calculate();
-      document.getElementById('foodGrams').focus();
-    }
-
-    function saveCurrentAsPreset() {
-      const sg = parseFloat(document.getElementById('servingGrams').value);
-      const sc = parseFloat(document.getElementById('servingCals').value);
-      if (!(sg > 0 && sc >= 0)) {
-        alert('Enter valid serving grams and serving calories first.');
-        return;
-      }
-
-      let name = document.getElementById('foodName').value.trim();
-      if (!name) {
-        name = prompt('Enter a name for this ration preset:');
-        if (!name || !name.trim()) return;
-        name = name.trim();
-        document.getElementById('foodName').value = name;
-      }
-
-      presets.push({ name, servingGrams: sg, servingCals: sc });
-      presets.sort((a, b) => a.name.localeCompare(b.name));
-      localStorage.setItem('calPresets', JSON.stringify(presets));
-      renderPresets();
-      alert(`Saved "${name}" to offline presets.`);
-    }
-
-    function deletePreset() {
-      const idx = document.getElementById('presetSelect').value;
-      if (idx === '') {
-        alert('Select a preset from the dropdown first.');
-        return;
-      }
-      const p = presets[parseInt(idx, 10)];
-      if (confirm(`Delete preset "${p.name}"?`)) {
-        presets.splice(parseInt(idx, 10), 1);
-        localStorage.setItem('calPresets', JSON.stringify(presets));
-        renderPresets();
-      }
-    }
-
-    function toggleApiConfig() {
-      const panel = document.getElementById('apiConfigPanel');
-      panel.style.display = panel.style.display === 'block' ? 'none' : 'block';
-    }
-
-    function saveApiKey() {
-      const val = document.getElementById('usdaKeyInput').value.trim();
-      if (val) {
-        localStorage.setItem('usdaApiKey', val);
-        document.getElementById('scanStatus').innerText = 'Personal USDA API key saved locally.';
-      } else {
-        localStorage.removeItem('usdaApiKey');
-        document.getElementById('scanStatus').innerText = 'Reverted to public DEMO_KEY.';
-      }
-      document.getElementById('apiConfigPanel').style.display = 'none';
-    }
-
-    async function toggleScanner() {
-      const readerEl = document.getElementById('reader');
-      const btnText = document.getElementById('scanBtnText');
-      const statusEl = document.getElementById('scanStatus');
-
-      if (isScanning && html5QrCode) {
-        try {
-          await html5QrCode.stop();
-          html5QrCode.clear();
-        } catch (e) {}
-        isScanning = false;
-        readerEl.style.display = 'none';
-        btnText.innerText = 'Scan Supply Barcode';
-        statusEl.innerText = 'Scanner stopped.';
-        return;
-      }
-
-      if (typeof Html5Qrcode === 'undefined') {
-        statusEl.innerText = 'Scanner library still loading or offline.';
-        return;
-      }
-
-      readerEl.style.display = 'block';
-      btnText.innerText = 'Stop Scanner';
-      statusEl.innerText = 'Starting camera...';
-
-      html5QrCode = new Html5Qrcode("reader");
-      try {
-        await html5QrCode.start(
-          { facingMode: "environment" },
-          { fps: 10, qrbox: { width: 250, height: 130 } },
-          async (decodedText) => {
-            if (!isScanning) return;
-            isScanning = false;
-            try {
-              await html5QrCode.stop();
-              html5QrCode.clear();
-            } catch (e) {}
-            readerEl.style.display = 'none';
-            btnText.innerText = 'Scan Supply Barcode';
-            await lookupBarcode(decodedText);
-          },
-          () => {}
-        );
-        isScanning = true;
-        statusEl.innerText = 'Point camera at product barcode...';
-      } catch (err) {
-        isScanning = false;
-        readerEl.style.display = 'none';
-        btnText.innerText = 'Scan Supply Barcode';
-        statusEl.innerText = 'Camera access denied or unavailable.';
-      }
-    }
-
-    async function lookupBarcode(rawCode) {
-      const statusEl = document.getElementById('scanStatus');
-      const cleanCode = rawCode.replace(/\D/g, '');
-      const apiKey = localStorage.getItem('usdaApiKey') || 'DEMO_KEY';
-
-      statusEl.innerText = `Checking USDA database for ${cleanCode}...`;
-
-      const queries = [cleanCode];
-      if (cleanCode.length === 12) queries.push('0' + cleanCode);
-      if (cleanCode.length === 13 && cleanCode.startsWith('0')) queries.push(cleanCode.slice(1));
-
-      try {
-        for (const q of queries) {
-          const usdaUrl = `https://api.nal.usda.gov/fdc/v1/foods/search?api_key=${encodeURIComponent(apiKey)}&query=${encodeURIComponent(q)}&dataType=Branded&pageSize=5`;
-          const res = await fetch(usdaUrl);
-          if (res.ok) {
-            const data = await res.json();
-            if (data.foods && data.foods.length > 0) {
-              const exactMatch = data.foods.find(f => f.gtinUpc && f.gtinUpc.replace(/^0+/, '') === cleanCode.replace(/^0+/, '')) || data.foods[0];
-              const energyNutrient = (exactMatch.foodNutrients || []).find(n => n.nutrientId === 1008 || (n.nutrientName && n.nutrientName.toLowerCase().includes('energy') && n.unitName && n.unitName.toUpperCase() === 'KCAL'));
-
-              if (energyNutrient && typeof energyNutrient.value === 'number') {
-                const kcalPer100g = energyNutrient.value;
-                let finalGrams = 100;
-                let finalCals = Math.round(kcalPer100g);
-
-                if (exactMatch.servingSize && exactMatch.servingSize > 0 && exactMatch.servingSizeUnit && exactMatch.servingSizeUnit.toLowerCase().startsWith('g')) {
-                  finalGrams = Math.round(exactMatch.servingSize * 10) / 10;
-                  finalCals = Math.round((kcalPer100g / 100) * exactMatch.servingSize);
-                }
-
-                document.getElementById('servingGrams').value = finalGrams;
-                document.getElementById('servingCals').value = finalCals;
-
-                const brand = exactMatch.brandOwner || exactMatch.brandName || '';
-                const desc = exactMatch.description || 'Scanned Ration';
-                const formattedName = brand ? `${toTitleCase(brand)} - ${toTitleCase(desc)}` : toTitleCase(desc);
-                document.getElementById('foodName').value = formattedName;
-
-                calculate();
-                statusEl.innerText = `USDA Match: ${formattedName} (${finalGrams}g = ${finalCals} kcal)`;
-                document.getElementById('foodGrams').focus();
-                return;
-              }
-            }
-          }
-        }
-      } catch (e) {
-        // Proceed to Open Food Facts fallback on network/USDA error
-      }
-
-      // Fallback to Open Food Facts with exact serving support
-      statusEl.innerText = `Not in USDA. Checking Open Food Facts for ${cleanCode}...`;
-      try {
-        const offUrl = `https://world.openfoodfacts.org/api/v2/product/${encodeURIComponent(cleanCode)}.json`;
-        const offRes = await fetch(offUrl);
-        if (offRes.ok) {
-          const offData = await offRes.json();
-          if (offData.status === 1 && offData.product && offData.product.nutriments) {
-            const nutr = offData.product.nutriments;
-            const servingQty = parseFloat(offData.product.serving_quantity);
-            const servingKcal = parseFloat(nutr['energy-kcal_serving']);
-            const kcal100 = parseFloat(nutr['energy-kcal_100g'] ?? nutr['energy-kcal']);
-
-            let finalGrams = null;
-            let finalCals = null;
-
-            if (servingQty > 0 && !isNaN(servingKcal) && servingKcal >= 0) {
-              finalGrams = Math.round(servingQty * 10) / 10;
-              finalCals = Math.round(servingKcal);
-            } else if (servingQty > 0 && !isNaN(kcal100) && kcal100 >= 0) {
-              finalGrams = Math.round(servingQty * 10) / 10;
-              finalCals = Math.round((kcal100 / 100) * servingQty);
-            } else if (!isNaN(kcal100) && kcal100 >= 0) {
-              finalGrams = 100;
-              finalCals = Math.round(kcal100);
-            }
-
-            if (finalGrams !== null && finalCals !== null) {
-              document.getElementById('servingGrams').value = finalGrams;
-              document.getElementById('servingCals').value = finalCals;
-
-              const brand = offData.product.brands ? offData.product.brands.split(',')[0].trim() : '';
-              const prodName = offData.product.product_name || 'Scanned Ration';
-              const formattedName = brand ? `${brand} - ${prodName}` : prodName;
-              document.getElementById('foodName').value = formattedName;
-
-              calculate();
-              statusEl.innerText = `Open Food Facts (Verify Label): ${formattedName} (${finalGrams}g = ${finalCals} kcal)`;
-              document.getElementById('foodGrams').focus();
-              return;
-            }
-          }
-        }
-      } catch (e) {
-        statusEl.innerText = 'Network error while querying nutrition databases.';
-        return;
-      }
-
-      statusEl.innerText = `Barcode ${cleanCode} not found in USDA or Open Food Facts. Enter label manually.`;
-    }
-
-    function toTitleCase(str) {
-      return str.toLowerCase().replace(/\w/g, c => c.toUpperCase());
+    function updateGoal() {
+      const val = parseFloat(document.getElementById('dailyGoal').value);
+      dailyGoal = val > 0 ? val : 0;
+      localStorage.setItem('calGoal', dailyGoal);
+      renderProgress();
     }
 
     function addToTally() {
       let cals = 0;
       let label = '';
       const nameInput = document.getElementById('foodName').value.trim();
+      const category = document.getElementById('mealCategory').value;
 
       if (currentMode === 'weigh') {
         cals = calculate();
         if (cals <= 0) return;
         const fg = document.getElementById('foodGrams').value;
-        label = nameInput ? `${nameInput} (${fg}g)` : `Weighed Ration (${fg}g)`;
+        label = nameInput ? `${nameInput} (${fg}g)` : `Ration (${fg}g)`;
+
         document.getElementById('foodGrams').value = '';
-        document.getElementById('calcResult').innerText = '0';
+        document.getElementById('result').innerText = '0';
       } else {
-        cals = Math.round(parseFloat(document.getElementById('directCals').value));
-        if (!(cals > 0)) return;
-        label = nameInput || 'Direct Ration';
+        const dc = parseFloat(document.getElementById('directCals').value);
+        if (!(dc > 0)) return;
+        cals = Math.round(dc);
+        label = nameInput || 'Direct Supply';
+
         document.getElementById('directCals').value = '';
       }
 
-      logs.push({ label, cals, meal: selectedMeal });
       document.getElementById('foodName').value = '';
+      logs.push({ label, cals, category });
       saveAndRender();
+    }
+
+    function moveItemCategory(index, newCategory) {
+      if (logs[index] && CATEGORIES.includes(newCategory)) {
+        logs[index].category = newCategory;
+        saveAndRender();
+      }
     }
 
     function removeItem(index) {
@@ -1008,96 +1204,117 @@
       saveAndRender();
     }
 
-    function confirmReset() {
+    function clearTally() {
       if (logs.length === 0) return;
-      if (confirm('Fire the cannon and wipe all logged rations for today?')) {
+      if (confirm('Sound the cannon and wipe all logged rations for today?')) {
         logs = [];
         saveAndRender();
       }
     }
 
-    function saveTarget() {
-      const val = document.getElementById('dailyTarget').value;
-      if (val && parseFloat(val) > 0) {
-        localStorage.setItem('calTarget', val);
+    function renderProgress() {
+      const total = logs.reduce((sum, item) => sum + item.cals, 0);
+      const progressSection = document.getElementById('goalProgressSection');
+
+      if (dailyGoal > 0) {
+        progressSection.classList.remove('hidden');
+        const pct = Math.round((total / dailyGoal) * 100);
+        const barWidth = Math.min(pct, 100);
+        const bar = document.getElementById('progressBar');
+
+        bar.style.width = barWidth + '%';
+        document.getElementById('percentText').innerText = `${pct}% of allotment (${dailyGoal} kcal)`;
+
+        const diff = dailyGoal - total;
+        const remEl = document.getElementById('remainingText');
+
+        if (diff >= 0) {
+          bar.classList.remove('over');
+          remEl.classList.remove('over-text');
+          remEl.innerText = `${diff} kcal remaining`;
+        } else {
+          bar.classList.add('over');
+          remEl.classList.add('over-text');
+          remEl.innerText = `${Math.abs(diff)} kcal over`;
+        }
       } else {
-        localStorage.removeItem('calTarget');
+        progressSection.classList.add('hidden');
       }
-      updateProgress();
     }
 
     function saveAndRender() {
       localStorage.setItem('calLogs', JSON.stringify(logs));
-      renderLogs();
-    }
 
-    function renderLogs() {
-      const meals = ['breakfast', 'lunch', 'dinner', 'snack'];
-      const subtotals = { breakfast: 0, lunch: 0, dinner: 0, snack: 0 };
-      let total = 0;
-
-      meals.forEach(m => {
-        document.getElementById(`list-${m}`).innerHTML = '';
+      const catTotals = { Breakfast: 0, Lunch: 0, Dinner: 0, Snack: 0 };
+      CATEGORIES.forEach(cat => {
+        document.getElementById(`list-${cat}`).innerHTML = '';
       });
+
+      let grandTotal = 0;
 
       logs.forEach((item, index) => {
-        const m = meals.includes(item.meal) ? item.meal : 'snack';
-        subtotals[m] += item.cals;
-        total += item.cals;
+        const cat = CATEGORIES.includes(item.category) ? item.category : 'Snack';
+        grandTotal += item.cals;
+        catTotals[cat] += item.cals;
 
+        const list = document.getElementById(`list-${cat}`);
         const li = document.createElement('li');
-        li.innerHTML = `<span>${escapeHtml(item.label)}</span><span><strong>${item.cals}</strong> kcal <span class="delete-item" onclick="removeItem(${index})">×</span></span>`;
-        document.getElementById(`list-${m}`).appendChild(li);
+
+        const leftSpan = document.createElement('span');
+        leftSpan.className = 'item-left';
+        leftSpan.textContent = item.label;
+
+        const rightSpan = document.createElement('span');
+        rightSpan.className = 'item-right';
+
+        const moveSel = document.createElement('select');
+        moveSel.className = 'move-select';
+        moveSel.title = 'Move to another ration period';
+        CATEGORIES.forEach(c => {
+          const opt = document.createElement('option');
+          opt.value = c;
+          opt.textContent = CATEGORY_SHORT[c];
+          if (c === cat) opt.selected = true;
+          moveSel.appendChild(opt);
+        });
+        moveSel.onchange = function() {
+          moveItemCategory(index, this.value);
+        };
+
+        const calsStrong = document.createElement('strong');
+        calsStrong.textContent = item.cals;
+
+        const delSpan = document.createElement('span');
+        delSpan.className = 'delete-item';
+        delSpan.textContent = '×';
+        delSpan.title = 'Delete entry';
+        delSpan.onclick = function() {
+          removeItem(index);
+        };
+
+        rightSpan.appendChild(moveSel);
+        rightSpan.appendChild(calsStrong);
+        rightSpan.appendChild(document.createTextNode(' kcal '));
+        rightSpan.appendChild(delSpan);
+
+        li.appendChild(leftSpan);
+        li.appendChild(rightSpan);
+        list.appendChild(li);
       });
 
-      meals.forEach(m => {
-        document.getElementById(`sub-${m}`).innerText = subtotals[m];
-        const ul = document.getElementById(`list-${m}`);
-        if (ul.children.length === 0) {
-          ul.innerHTML = '<li class="empty-note">No rations logged</li>';
+      CATEGORIES.forEach(cat => {
+        document.getElementById(`total-${cat}`).innerText = catTotals[cat];
+        const list = document.getElementById(`list-${cat}`);
+        if (list.children.length === 0) {
+          list.innerHTML = '<li class="empty-msg">No rations logged</li>';
         }
       });
 
-      document.getElementById('totalCals').innerText = total;
-      updateProgress(total);
+      document.getElementById('totalCals').innerText = grandTotal;
+      renderProgress();
     }
 
-    function updateProgress(passedTotal) {
-      const total = typeof passedTotal === 'number' ? passedTotal : parseInt(document.getElementById('totalCals').innerText, 10) || 0;
-      const target = parseFloat(document.getElementById('dailyTarget').value);
-      const sec = document.getElementById('progressSection');
-
-      if (!(target > 0)) {
-        sec.style.display = 'none';
-        return;
-      }
-
-      sec.style.display = 'block';
-      const pct = Math.round((total / target) * 100);
-      const fill = document.getElementById('progressFill');
-      fill.style.width = `${Math.min(pct, 100)}%`;
-
-      const remEl = document.getElementById('remainingText');
-      document.getElementById('percentText').innerText = `${pct}% of allotment`;
-
-      if (total > target) {
-        fill.classList.add('over');
-        remEl.classList.add('over-text');
-        remEl.innerText = `${total - target} kcal over`;
-      } else {
-        fill.classList.remove('over');
-        remEl.classList.remove('over-text');
-        remEl.innerText = `${target - total} kcal remaining`;
-      }
-    }
-
-    function escapeHtml(str) {
-      return str.replace(/[&<>"']/g, c => ({
-        '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
-      }[c]));
-    }
-
-    init();
+    saveAndRender();
   </script>
 </body>
 </html>
